@@ -1,0 +1,26 @@
+{
+	"dataprovider": [
+		{
+			"url": {
+				"userId": "5"
+			},
+			"resbody": {
+				"data.id": "5",
+				"data.first_name": "Charles",
+				"data.last_name": "Morris",
+				"support.url": "https://reqres.in/#support-heading"
+			}
+		},
+		{
+			"url": {
+				"userId": "6"
+			},
+			"resbody": {
+				"data.id": "6",
+				"data.first_name": "Tracey",
+				"data.last_name": "Ramos",
+				"support.url": "https://reqres.in/#support-heading"
+			}
+		}
+	]
+}

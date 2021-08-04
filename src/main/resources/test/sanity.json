@@ -1,0 +1,48 @@
+[
+	{
+		"scenario": "Veriy able to create users with different data",
+		"execute": "n",
+		"request": {
+			"url": "https://reqres.in/api/users/{userId}",
+			"method": "post",
+			"testdata": "testdata_createuser.json"
+		},
+		"validate": {
+			"statuscode": 201,
+			"resbody": {
+				"testdata":"testdata_createuser.json"
+			}
+		}
+	},
+	{
+		"scenario": "Veriy able to get the user with id 2",
+		"execute": "y",
+		"request": {
+			"url": "https://reqres.in/api/users/2",
+			"method": "GET"
+		},
+		"validate": {
+			"statuscode": 200,
+			"resbody": {
+				"data.id": "2",
+				"data.first_name": "Janet",
+				"support.url": "https://reqres.in/#support-heading"
+			}
+		}
+	},
+	{
+		"scenario": "Veriy able to get different the users",
+		"execute": "y",
+		"request": {
+			"url": "https://reqres.in/api/users/{userId}",
+			"method": "GET",
+			"testdata":"testdata_getapi.json"
+		},
+		"validate": {
+			"statuscode": 200,
+			"resbody": {
+				"testdata":"testdata_getapi.json"
+			}
+		}
+	}
+]
