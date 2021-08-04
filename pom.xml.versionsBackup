@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.pavandv9</groupId>
-	<artifactId>nocode</artifactId>
-	<version>1.0.0</version>
+	<artifactId>core-api</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>nocode</name>
+	<name>core-api</name>
 	<description>This is simple and easy to use for api automation</description>
 	<url>https://github.com/pavandv9/core-api</url>
 
@@ -25,24 +25,27 @@
 			<name>Pavan DV</name>
 			<email>pavandv9@gmail.com</email>
 			<organization>com.github.pavandv9</organization>
-			<organizationUrl>https://github.com/pavandv9/nocode</organizationUrl>
+			<organizationUrl>https://github.com/pavandv9/core-api</organizationUrl>
 		</developer>
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/pavandv9/nocode.git</connection>
-		<developerConnection>scm:git:ssh://github.com:pavandv9/nocode.git</developerConnection>
-		<url>https://github.com/pavandv9/nocode</url>
+		<connection>scm:git:git://github.com/pavandv9/core-api.git</connection>
+		<developerConnection>scm:git:ssh://github.com:pavandv9/core-api.git</developerConnection>
+		<url>https://github.com/pavandv9/core-api</url>
 	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<allure.version>2.13.2</allure.version>
+		<allure.maven>2.10.0</allure.maven>
 		<testng.version>7.1.0</testng.version>
-		<httpclient.version>4.5.13</httpclient.version>
+		<httpclient.version>4.5.12</httpclient.version>
 		<httpcore.version>4.4.13</httpcore.version>
 		<slf4j.version>1.7.25</slf4j.version>
+		<lombok.version>1.18.12</lombok.version>
 		<json.version>20190722</json.version>
 		<gson.version>2.8.6</gson.version>
 		<logback.verison>1.2.3</logback.verison>
@@ -56,8 +59,6 @@
 		<json.simple.version>1.1.1</json.simple.version>
 		<jackson.databind.version>2.12.1</jackson.databind.version>
 		<oracle.database.version>11.2.0.4</oracle.database.version>
-		<mongo.driver.version>3.12.8</mongo.driver.version>
-		<aws.s3.version>1.11.986</aws.s3.version>
 	</properties>
 
 	<dependencies>
@@ -72,6 +73,11 @@
 			<version>${httpcore.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>${json.version}</version>
@@ -80,6 +86,11 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>${testng.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-testng</artifactId>
+			<version>${allure.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -128,20 +139,16 @@
 			<version>${mysql.connector.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.databind.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>${oracle.database.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>${mongo.driver.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.aventstack</groupId>
-			<artifactId>extentreports</artifactId>
-			<version>5.0.8</version>
-		</dependency>
+
 
 	</dependencies>
 	<build>
@@ -187,7 +194,7 @@
 					</execution>
 				</executions>
 			</plugin>
-		<!-- 	<plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
@@ -199,10 +206,7 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-				</configuration>
-			</plugin> -->
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -217,20 +221,21 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.owasp</groupId>
-				<artifactId>dependency-check-maven</artifactId>
-				<version>6.2.2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
+	<reporting>
+		<!-- <excludeDefaults>true</excludeDefaults> -->
+		<plugins>
+			<plugin>
+				<groupId>io.qameta.allure</groupId>
+				<artifactId>allure-maven</artifactId>
+				<version>${allure.maven}</version>
+				<configuration>
+					<reportVersion>${allure.version}</reportVersion>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
