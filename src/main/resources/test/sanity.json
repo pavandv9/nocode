@@ -1,7 +1,7 @@
 [
 	{
 		"scenario": "Veriy able to create users with different data",
-		"execute": "n",
+		"execute": "y",
 		"request": {
 			"url": "https://reqres.in/api/users/{userId}",
 			"method": "post",
@@ -16,7 +16,7 @@
 	},
 	{
 		"scenario": "Veriy able to get the user with id 2",
-		"execute": "y",
+		"execute": "n",
 		"request": {
 			"url": "https://reqres.in/api/users/2",
 			"method": "GET"
@@ -32,7 +32,7 @@
 	},
 	{
 		"scenario": "Veriy able to get different the users",
-		"execute": "y",
+		"execute": "n",
 		"request": {
 			"url": "https://reqres.in/api/users/{userId}",
 			"method": "GET",

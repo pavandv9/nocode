@@ -1,9 +1,7 @@
 {
 	"body": {
 		"name": "test1",
-		"job": "leader",
-		"id": "910",
-		"createdAt": "2021-07-16T11:43:58.709Z"
+		"job": "leader"
 	},
 	"dataprovider": [
 		{
