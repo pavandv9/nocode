@@ -22,6 +22,7 @@ import com.mongodb.client.result.UpdateResult;
 import com.mysql.cj.exceptions.CJCommunicationsException;
 import com.nocode.config.DataSourceConfig;
 import com.nocode.config.NoSqlConfig;
+import com.nocode.constants.DatabaseConstants;
 import com.nocode.exception.DatabaseException;
 
 /**
@@ -73,9 +74,9 @@ public class DatabaseUtil implements ILogger {
 	public List<Map<String, Object>> execute(String sqlQuery) {
 		if (system.isEmpty()) {
 			LOG.warn("Set system before executing execute query");
-			throw new DatabaseException("Database system not found");
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
-		return execute(sqlQuery, system);
+		return execute(system, sqlQuery);
 	}
 
 	/**
@@ -85,10 +86,10 @@ public class DatabaseUtil implements ILogger {
 	 */
 	public void update(String sqlQuery) {
 		if (system.isEmpty()) {
-			LOG.warn("Set system before executing update query");
-			throw new DatabaseException("Database system not found");
+			LOG.warn(DatabaseConstants.UPDATE_QUERY_ERROR_MESSAGE);
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
-		update(sqlQuery, system);
+		update(system, sqlQuery);
 	}
 
 	/**
@@ -98,10 +99,10 @@ public class DatabaseUtil implements ILogger {
 	 */
 	public void insert(String sqlQuery) {
 		if (system.isEmpty()) {
-			LOG.warn("Set system before executing update query");
-			throw new DatabaseException("Database system not found");
+			LOG.warn(DatabaseConstants.UPDATE_QUERY_ERROR_MESSAGE);
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
-		update(sqlQuery, system);
+		update(system, sqlQuery);
 	}
 
 	/**
@@ -111,10 +112,10 @@ public class DatabaseUtil implements ILogger {
 	 */
 	public void insert(String sqlQuery, String system) {
 		if (system.isEmpty()) {
-			LOG.warn("Set system before executing update query");
-			throw new DatabaseException("Database system not found");
+			LOG.warn(DatabaseConstants.UPDATE_QUERY_ERROR_MESSAGE);
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
-		update(sqlQuery, system);
+		update(system, sqlQuery);
 	}
 
 	/**
@@ -124,10 +125,10 @@ public class DatabaseUtil implements ILogger {
 	 */
 	public void delete(String sqlQuery) {
 		if (system.isEmpty()) {
-			LOG.warn("Set system before executing update query");
-			throw new DatabaseException("Database system not found");
+			LOG.warn(DatabaseConstants.UPDATE_QUERY_ERROR_MESSAGE);
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
-		update(sqlQuery, system);
+		update(system, sqlQuery);
 	}
 
 	/**
@@ -137,10 +138,10 @@ public class DatabaseUtil implements ILogger {
 	 */
 	public void delete(String sqlQuery, String system) {
 		if (system.isEmpty()) {
-			LOG.warn("Set system before executing update query");
-			throw new DatabaseException("Database system not found");
+			LOG.warn(DatabaseConstants.UPDATE_QUERY_ERROR_MESSAGE);
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
-		update(sqlQuery, system);
+		update(system, sqlQuery);
 	}
 
 	/**
@@ -153,8 +154,8 @@ public class DatabaseUtil implements ILogger {
 	 */
 	public List<JSONObject> getDataFromMongo(String collection, String searchKey, String searchValue) {
 		if (system.isEmpty()) {
-			LOG.warn("Set system before getting collection");
-			throw new DatabaseException("Database system not found");
+			LOG.warn(DatabaseConstants.GET_COLLECTION_ERROR_MESSAGE);
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
 		return getDataFromMongo(system, collection, searchKey, searchValue);
 	}
@@ -171,8 +172,8 @@ public class DatabaseUtil implements ILogger {
 	public void updateDataInMongo(String collection, String searchKey, String searchValue, String updateKey,
 			String updateValue) {
 		if (system.isEmpty()) {
-			LOG.warn("Set system before getting collection");
-			throw new DatabaseException("Database system not found");
+			LOG.warn(DatabaseConstants.GET_COLLECTION_ERROR_MESSAGE);
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
 		updateDataInMongo(system, collection, searchKey, searchValue, updateKey, updateValue);
 	}
@@ -186,16 +187,16 @@ public class DatabaseUtil implements ILogger {
 	 */
 	public void deleteDataInMongo(String collection, String deleteKey, String deleteValue) {
 		if (system.isEmpty()) {
-			LOG.warn("Set system before getting collection");
-			throw new DatabaseException("Database system not found");
+			LOG.warn(DatabaseConstants.GET_COLLECTION_ERROR_MESSAGE);
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
 		deleteDataInMongo(system, collection, deleteKey, deleteValue);
 	}
 
 	public void insertDataInMongo(String collection, Document document) {
 		if (system.isEmpty()) {
-			LOG.warn("Set system before getting collection");
-			throw new DatabaseException("Database system not found");
+			LOG.warn(DatabaseConstants.GET_COLLECTION_ERROR_MESSAGE);
+			throw new DatabaseException(DatabaseConstants.DATABASE_NOT_FOUND);
 		}
 		insertDataInMongo(system, collection, document);
 	}
@@ -209,7 +210,7 @@ public class DatabaseUtil implements ILogger {
 	 */
 	public List<Map<String, Object>> execute(String system, String sqlQuery) {
 		if (jdbcTemplate == null || !system.equals(this.system)) {
-			LOG.info("Connecting to database: " + system);
+			LOG.info("Connecting to database: {0}", system);
 			try {
 				jdbcTemplate = new JdbcTemplate(new DataSourceConfig().getDataSource(system));
 			} catch (CJCommunicationsException e) {

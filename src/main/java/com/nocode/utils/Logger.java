@@ -31,14 +31,12 @@ public class Logger implements ILogger {
 	public static final String NEW_LINE = System.lineSeparator();
 	private static final String FORMAT = "%1$-15s%2$-20s%3$-50s";
 	private static final String FORMAT_TEXT = FORMAT + NEW_LINE;
-	public static final String SUFFIX = "****************************************************************************************************";
+	public static final String SUFFIX = "=============================================================";
 	private static final String RESPONSE_BODY = "Response body";
 
 	public static void logRequest(HttpRequest httpRequest) {
 		Logger.httpRequest = httpRequest;
-		String prefix = NEW_LINE
-				+ "********************************************* Request **********************************************"
-				+ NEW_LINE;
+		String prefix = NEW_LINE + "=========================  Request  =========================" + NEW_LINE;
 		StringBuilder builder = new StringBuilder();
 		builder.append(String.format(FORMAT_TEXT, "Http Method", ":", httpRequest.getHttpMethod()));
 		builder.append(String.format(FORMAT_TEXT, "Base Url", ":", httpRequest.getBaseUrl()));
@@ -54,19 +52,16 @@ public class Logger implements ILogger {
 	}
 
 	public static void logResponse(HttpResponse response) {
-		String prefix = NEW_LINE
-				+ "********************************************* Response *********************************************"
-				+ NEW_LINE;
-		String suffix = "****************************************************************************************************";
+		String prefix = NEW_LINE + "=========================  Response  =========================" + NEW_LINE;
 		StringBuilder builder = new StringBuilder();
 		builder.append(String.format(FORMAT_TEXT, "Status code", ":", response.getStatusLine().getStatusCode()));
 		builder.append(String.format(FORMAT_TEXT, "Status message", ":", response.getStatusLine().getStatusMessage()));
 		builder.append(String.format(FORMAT_TEXT, "Headers", ":", prettyMap(response.getHeaders())));
-		builder = appendBody(builder, response);
+		appendBody(builder, response);
 		builder.append(String.format(FORMAT_TEXT, "Find the report here", ":", "attach report link here"));
-		String responseLog = prefix + builder.toString() + suffix;
+		String responseLog = prefix + builder.toString() + SUFFIX;
 		LOG.info(responseLog);
-		Reporter.log(JavaUtil.convertToHtml(prefix) + JavaUtil.convertToHtml(builder.toString()) + suffix);
+		Reporter.log(JavaUtil.convertToHtml(prefix) + JavaUtil.convertToHtml(builder.toString()) + SUFFIX);
 //		ReportUtil.logReqRes(Status.PASS, responseLog);
 	}
 
@@ -117,17 +112,13 @@ public class Logger implements ILogger {
 	}
 
 	private static String getRequestBody() {
-		return httpRequest.getContentType().contains("json") == true
+		return httpRequest.getContentType().contains("json")
 				? JavaUtil.prettyJson(JavaUtil.toJson(httpRequest.getBody()))
 				: JavaUtil.prettyXml(JavaUtil.toXml(httpRequest.getBody()));
 	}
 
 	public static void logMailProperties() {
-		String prefix = NEW_LINE
-				+ "********************************************* Mail Properties **********************************************"
-				+ NEW_LINE;
-		String suffix = NEW_LINE
-				+ "****************************************************************************************************";
+		String prefix = NEW_LINE + "=========================  Mail Properties  =========================" + NEW_LINE;
 		StringBuilder builder = new StringBuilder();
 		builder.append(
 				"To send mail fill the data in mail.properties available in src/main/resources, if not available refresh the folder. \nStill not visible create it in same folder and add below data to it");
@@ -139,16 +130,13 @@ public class Logger implements ILogger {
 		builder.append(NEW_LINE + MailProperty.CC.getValue());
 		builder.append(NEW_LINE + MailProperty.SUB.getValue());
 		builder.append(NEW_LINE + MailProperty.TEXT.getValue());
-		String mailProps = prefix + builder.toString() + suffix;
+		String mailProps = prefix + builder.toString() + SUFFIX;
 		LOG.info(mailProps);
-		Reporter.log(JavaUtil.convertToHtml(prefix) + JavaUtil.convertToHtml(builder.toString()) + suffix);
+		Reporter.log(JavaUtil.convertToHtml(prefix) + JavaUtil.convertToHtml(builder.toString()) + SUFFIX);
 	}
 
 	public static void logMailRequest() {
-		String prefix = NEW_LINE
-				+ "********************************************* Mail Request **********************************************"
-				+ NEW_LINE;
-		String suffix = "****************************************************************************************************";
+		String prefix = NEW_LINE + "=========================  Mail Request  =========================" + NEW_LINE;
 		StringBuilder builder = new StringBuilder();
 		builder.append("Sending mail to below details..." + NEW_LINE);
 		PropertyUtil.loadProperties(ResourceFile.MAIL_FILE);
@@ -161,9 +149,9 @@ public class Logger implements ILogger {
 		builder.append(String.format(FORMAT_TEXT, "Text", ":",
 				!PropertyUtil.get(MailProperty.TEXT).isEmpty() ? PropertyUtil.get(MailProperty.TEXT)
 						: DefProperty.TEXT));
-		String mailProps = prefix + builder.toString() + suffix;
+		String mailProps = prefix + builder.toString() + SUFFIX;
 		LOG.info(mailProps);
-		Reporter.log(JavaUtil.convertToHtml(prefix) + JavaUtil.convertToHtml(builder.toString()) + suffix);
+		Reporter.log(JavaUtil.convertToHtml(prefix) + JavaUtil.convertToHtml(builder.toString()) + SUFFIX);
 	}
 
 }

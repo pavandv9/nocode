@@ -70,8 +70,7 @@ public class JavaUtil implements ILogger {
 
 	public static boolean isJsonValid(Object object) {
 		try {
-			new Gson().fromJson(object.toString(), String.class);
-//			new ObjectMapper().readTree(object.toString());
+			new Gson().fromJson(object.toString(), Object.class);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -136,6 +135,11 @@ public class JavaUtil implements ILogger {
 
 	public static Object getJsonFromMap(Map<String, Object> obj) {
 		return new JSONObject(obj);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static Map<String, Object> getMapFromJson(Object json) {
+		return new Gson().fromJson(json.toString(), Map.class);
 	}
 
 	/**

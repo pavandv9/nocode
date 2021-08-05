@@ -97,7 +97,7 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 	 * 
 	 * @return
 	 */
-	private URI URI() {
+	private URI uri() {
 		URI uri = null;
 		try {
 			URIBuilder uriBuilder = new URIBuilder(buildPathParams());
@@ -145,7 +145,7 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 	 */
 	private CloseableHttpClient getDefaultClient() {
 		CloseableHttpClient client = HttpClients.createDefault();
-		HashSet<Header> defaultHeaders = new HashSet<Header>();
+		HashSet<Header> defaultHeaders = new HashSet<>();
 		defaultHeaders.add(new BasicHeader(HttpHeaders.PRAGMA, "no-cache"));
 		defaultHeaders.add(new BasicHeader(HttpHeaders.CACHE_CONTROL, "no-cache"));
 		defaultHeaders.add(new BasicHeader(ACCEPT, APPLICATION_JSON));
@@ -171,46 +171,46 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 		switch (method) {
 		case GET:
 			HttpGet httpGet = new HttpGet();
-			httpGet.setURI(URI());
+			httpGet.setURI(uri());
 			setHeaders(httpGet);
 			httpUriRequest = httpGet;
 			break;
 		case POST:
 			HttpPost httpPost = new HttpPost();
-			httpPost.setURI(URI());
+			httpPost.setURI(uri());
 			httpPost.setEntity(getHttpEntityBody());
 			setHeaders(httpPost);
 			httpUriRequest = httpPost;
 			break;
 		case PUT:
 			HttpPut httpPut = new HttpPut();
-			httpPut.setURI(URI());
+			httpPut.setURI(uri());
 			setHeaders(httpPut);
 			httpPut.setEntity(getHttpEntityBody());
 			httpUriRequest = httpPut;
 			break;
 		case PATCH:
 			HttpPatch httpPatch = new HttpPatch();
-			httpPatch.setURI(URI());
+			httpPatch.setURI(uri());
 			setHeaders(httpPatch);
 			httpPatch.setEntity(getHttpEntityBody());
 			httpUriRequest = httpPatch;
 			break;
 		case DELETE:
 			HttpDelete httpDelete = new HttpDelete();
-			httpDelete.setURI(URI());
+			httpDelete.setURI(uri());
 			setHeaders(httpDelete);
 			httpUriRequest = httpDelete;
 			break;
 		case OPTIONS:
 			HttpOptions httpOptions = new HttpOptions();
-			httpOptions.setURI(URI());
+			httpOptions.setURI(uri());
 			setHeaders(httpOptions);
 			httpUriRequest = httpOptions;
 			break;
 		case HEAD:
 			HttpHead httpHead = new HttpHead();
-			httpHead.setURI(URI());
+			httpHead.setURI(uri());
 			setHeaders(httpHead);
 			httpUriRequest = httpHead;
 			break;
@@ -250,7 +250,7 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 			} catch (ExceptionInInitializerError e) {
 			}
 		}
-		if (httpRequest.getBaseUrl() == null || baseUrl.isEmpty())
+		if (null == baseUrl || baseUrl.isEmpty())
 			throw new HttpException("base_url is not set");
 		if (baseUrl.contains("{") || baseUrl.contains("}"))
 			throw new HttpException("base_url is not valid");
@@ -260,6 +260,7 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 				if (authorization != null && !authorization.isEmpty())
 					httpRequest.addAuthorization(authorization);
 			} catch (ExceptionInInitializerError | NullPointerException e) {
+				// Do nothing
 			}
 		}
 	}
@@ -304,44 +305,15 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 	}
 
 	private static void clearFiles() {
-		cleareAllureResultsFiles();
-		cleareAllureReport();
+		cleareTestOutPutFiles();
 	}
 
-	private static void cleareAllureResultsFiles() {
+	private static void cleareTestOutPutFiles() {
 		try {
-			Arrays.stream(new File("allure-results").listFiles()).forEach(File::delete);
-			LOG.info("allure-results cleared from repository.");
+			Arrays.stream(new File("test-output").listFiles()).forEach(File::delete);
+			LOG.debug("test-output cleared from repository.");
 		} catch (NullPointerException e) {
+			// Do nothing
 		}
-	}
-
-	private static void cleareAllureReport() {
-		try {
-			Arrays.stream(new File("allure-report").listFiles()).forEach(File::delete);
-			LOG.info("allure-report cleared from repository.");
-		} catch (NullPointerException e) {
-		}
-	}
-
-	public static void main(String[] args) {
-		Object s = null;
-		String ss = null;
-		System.out.println(s);
-		System.out.println(ss);
-		method(null);
-		String[] languages = { "Abc", "KLMN", "xyZ" };
-		Arrays.stream(languages).forEach(str -> {
-			System.out.println(str);
-		});
-		;
-	}
-
-	public static void method(Object o) {
-		System.out.println("Object method");
-	}
-
-	public static void method(String s) {
-		System.out.println("String method");
 	}
 }

@@ -18,7 +18,7 @@ import com.nocode.utils.PropertyUtil;
  * @author Pavan.DV
  * @since 1.1.0
  */
-public class NoSqlConfig implements DatabaseConstants {
+public class NoSqlConfig {
 
 	public MongoDatabase getMongoConnection(String system) {
 		JSONArray jsonArr = JsonUtil.readJsonFile(new PropertyUtil().getResourceFile(ResourceFile.DB_NOSQL_FILE));
@@ -27,13 +27,14 @@ public class NoSqlConfig implements DatabaseConstants {
 		for (Object obj : jsonArr) {
 			JSONObject json = new JSONObject(obj.toString());
 			MongoClient mongoClient = new MongoClient(
-					json.getJSONObject(env).getJSONObject(system).get(HOST).toString(),
-					Integer.parseInt(json.getJSONObject(env).getJSONObject(system).get(PORT).toString()));
-			MongoCredential.createCredential(json.getJSONObject(env).getJSONObject(system).get(USERNAME).toString(),
-					json.getJSONObject(env).getJSONObject(system).get(DATABASE).toString(),
-					json.getJSONObject(env).getJSONObject(system).get(PASSWORD).toString().toCharArray());
+					json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.HOST).toString(),
+					Integer.parseInt(json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.PORT).toString()));
+			MongoCredential.createCredential(json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.USERNAME).toString(),
+					json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.DATABASE).toString(),
+					json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.PASSWORD).toString().toCharArray());
 			mongoDatabase = mongoClient
-					.getDatabase(json.getJSONObject(env).getJSONObject(system).get(DATABASE).toString());
+					.getDatabase(json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.DATABASE).toString());
+			mongoClient.close();
 		}
 		return mongoDatabase;
 	}

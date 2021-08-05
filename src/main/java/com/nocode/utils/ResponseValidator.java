@@ -13,7 +13,7 @@ public class ResponseValidator {
 	private Validate expected;
 	private HttpResponse httpResponse;
 
-	public ResponseValidator(Validate expectedValidator,  HttpResponse httpResponse) {
+	public ResponseValidator(Validate expectedValidator, HttpResponse httpResponse) {
 		this.expected = expectedValidator;
 		this.httpResponse = httpResponse;
 		validateStatusCode();
@@ -21,10 +21,13 @@ public class ResponseValidator {
 	}
 
 	private void validateResponseBody() {
-		String actualJsonBody = httpResponse.getBody().toString();
-		for (Entry<String, Object> entrySet : expected.getResbody().entrySet()) {
-			String actualValue = JsonUtil.parse(actualJsonBody, entrySet.getKey());
-			assertEquals(actualValue, entrySet.getValue(), String.format("%s, %s",AssertMessage.RESPONSE_BODY_FAILED, entrySet.getKey()));
+		if (null != expected.getResbody()) {
+			String actualJsonBody = httpResponse.getBody().toString();
+			for (Entry<String, Object> entrySet : expected.getResbody().entrySet()) {
+				String actualValue = JsonUtil.parse(actualJsonBody, entrySet.getKey());
+				assertEquals(actualValue, entrySet.getValue(),
+						String.format("%s, %s", AssertMessage.RESPONSE_BODY_FAILED, entrySet.getKey()));
+			}
 		}
 	}
 

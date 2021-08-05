@@ -26,7 +26,7 @@ import com.nocode.utils.PropertyUtil;
  * @since 1.0.0
  */
 @Configuration
-public class DataSourceConfig implements DatabaseConstants {
+public class DataSourceConfig {
 
 	@Bean
 	public DataSource getDataSource(String system) {
@@ -41,13 +41,16 @@ public class DataSourceConfig implements DatabaseConstants {
 		for (Object obj : jsonArr) {
 			JSONObject json = new JSONObject(obj.toString());
 			if (json.keySet().toString().toLowerCase().contains(env.toLowerCase())) {
-				dataSourceBuilder.username(json.getJSONObject(env).getJSONObject(system).get(USERNAME).toString());
-				dataSourceBuilder.password(json.getJSONObject(env).getJSONObject(system).get(PASSWORD).toString());
-				String dbType = json.getJSONObject(env).getJSONObject(system).get(DATABASE_TYPE).toString()
-						.toLowerCase();
-				String port = json.getJSONObject(env).getJSONObject(system).get(PORT).toString();
-				String host = json.getJSONObject(env).getJSONObject(system).get(HOST).toString();
-				String database = json.getJSONObject(env).getJSONObject(system).get(DATABASE).toString();
+				dataSourceBuilder.username(
+						json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.USERNAME).toString());
+				dataSourceBuilder.password(
+						json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.PASSWORD).toString());
+				String dbType = json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.DATABASE_TYPE)
+						.toString().toLowerCase();
+				String port = json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.PORT).toString();
+				String host = json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.HOST).toString();
+				String database = json.getJSONObject(env).getJSONObject(system).get(DatabaseConstants.DATABASE)
+						.toString();
 				switch (dbType) {
 				case "mysql":
 					dataSourceBuilder.driverClassName(DatabaseDriver.MYSQL.getDriverClassName());

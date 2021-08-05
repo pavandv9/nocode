@@ -89,15 +89,12 @@ public class ReportListener implements ITestListener {
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		
+		// will be adding in detail
 	}
 
 	@Override
 	public void onTestFailure(ITestResult result) {
 		Throwable t = result.getThrowable();
-		String cause = "";
-		if (t != null)
-			cause = t.getMessage();
 		try {
 			ReportUtil.logException(t);
 		} catch (Exception e) {
@@ -107,14 +104,17 @@ public class ReportListener implements ITestListener {
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
+		// will be adding in detail
 	}
 
 	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+		// will be adding in detail
 	}
 
 	@Override
 	public void onStart(ITestContext context) {
+		// will be adding in detail
 	}
 
 	@Override

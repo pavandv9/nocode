@@ -1,5 +1,8 @@
 package com.nocode.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ScenarioSteps {
 
 	private String scenario;
@@ -54,22 +57,23 @@ public class ScenarioSteps {
 		copyRequest.setUrl(this.getRequest().getUrl());
 		copyRequest.setMethod(this.getRequest().getMethod());
 		copyRequest.setTestdata(this.getRequest().getTestdata());
-
-//		Map<String, Object> copyHeaderMap = new HashMap<>();
-//		this.getRequest().getQueryparam().forEach(copyHeaderMap::put);
-//		copyRequest.setHeaders(copyHeaderMap);
-//
-//		Map<String, Object> copyQueryMap = new HashMap<>();
-//		this.getRequest().getQueryparam().forEach(copyQueryMap::put);
-//		copyRequest.setQueryparam(copyQueryMap);
-
+		if (null != this.getRequest().getHeaders()) {
+			Map<String, Object> copyHeaderMap = new HashMap<>();
+			this.getRequest().getHeaders().forEach(copyHeaderMap::put);
+			copyRequest.setHeaders(copyHeaderMap);
+		}
+		if (null != this.getRequest().getQueryparam()) {
+			Map<String, Object> copyQueryMap = new HashMap<>();
+			this.getRequest().getQueryparam().forEach(copyQueryMap::put);
+			copyRequest.setQueryparam(copyQueryMap);
+		}
 		Validate copyValidate = new Validate();
 		copyValidate.setStatuscode(this.getValidate().getStatuscode());
-
-//		Map<String, Object> copyBody = new HashMap<>();
-//		this.getRequest().getTestdata().forEach(copyBody::put);
-//		copyValidate.setResbody(copyBody);
-
+		if (null != this.getValidate().getResbody()) {
+			Map<String, Object> copyBody = new HashMap<>();
+			this.getValidate().getResbody().forEach(copyBody::put);
+			copyValidate.setResbody(copyBody);
+		}
 		return new ScenarioSteps(this.getScenario(), this.getExecute(), copyRequest, copyValidate);
 	}
 
