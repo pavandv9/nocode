@@ -8,10 +8,10 @@
 <dependency>
         <groupId>com.github.pavandv9</groupId>
         <artifactId>nocode</artifactId>
-        <version>[LATEST_VERSION](https://mvnrepository.com/artifact/com.github.pavandv9/nocode "LATEST_VERSION")</version>
+        <version>LATEST_VERSION</version>
 </dependency>
 ```
-> Click on the LATEST_VERSION to find the versions and replace LATEST_VERSION with version number.
+> Click [here](https://mvnrepository.com/artifact/com.github.pavandv9/nocode) to find the latest versions, replace LATEST_VERSION with version number.
 
 2. Create `test` and `testdata` folder under `src/main/resources`. 
 > If resources folder is not available go to file-> new-> source folder-> enter the folder name as src/main/resources-> finish.
