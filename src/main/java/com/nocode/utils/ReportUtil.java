@@ -1,4 +1,4 @@
-package com.nocode.config;
+package com.nocode.utils;
 
 import static com.nocode.config.ExtentReportManager.getCurrentTest;
 
@@ -12,7 +12,7 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
  * The Class is responsible for Reporting
  *
  * @author Pavan.DV
- * @since 1.3
+ * @since 1.0.0
  */
 public class ReportUtil {
 

@@ -22,9 +22,9 @@ import com.nocode.response.HttpResponse;
  * @author Pavan.DV
  * @since 1.0.0
  */
-public class Logger implements ILogger {
+public class ReportLogger implements ILogger {
 
-	private Logger() {
+	private ReportLogger() {
 	}
 
 	private static HttpRequest httpRequest;
@@ -35,7 +35,7 @@ public class Logger implements ILogger {
 	private static final String RESPONSE_BODY = "Response body";
 
 	public static void logRequest(HttpRequest httpRequest) {
-		Logger.httpRequest = httpRequest;
+		ReportLogger.httpRequest = httpRequest;
 		String prefix = NEW_LINE + "=========================  Request  =========================" + NEW_LINE;
 		StringBuilder builder = new StringBuilder();
 		builder.append(String.format(FORMAT_TEXT, "Http Method", ":", httpRequest.getHttpMethod()));

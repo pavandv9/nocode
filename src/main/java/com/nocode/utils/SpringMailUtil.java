@@ -31,9 +31,9 @@ public class SpringMailUtil implements ILogger {
 			EmailConfig emailConfig = new EmailConfig();
 			JavaMailSender mailSender = emailConfig.getJavaMailSender();
 			mailSender.send(emailConfig.emailTemplate(testcases));
-			Logger.logMailRequest();
+			ReportLogger.logMailRequest();
 		} else if (sendMail.equalsIgnoreCase("false")) {
-			Logger.logMailProperties();
+			ReportLogger.logMailProperties();
 		}
 	}
 

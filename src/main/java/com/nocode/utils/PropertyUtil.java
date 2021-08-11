@@ -12,8 +12,6 @@ import java.util.Properties;
 import com.nocode.constants.IConfig;
 import com.nocode.exception.HttpException;
 
-import lombok.NonNull;
-
 /**
  * @author Pavan.DV
  * @since 1.0.0
@@ -22,7 +20,7 @@ public class PropertyUtil {
 
 	static Properties properties = new Properties();
 
-	public static Properties loadProperties(@NonNull File file) {
+	public static Properties loadProperties(File file) {
 		try {
 			properties.load(new FileInputStream(file));
 			return properties;
@@ -40,11 +38,11 @@ public class PropertyUtil {
 		return properties;
 	}
 
-	public static Properties loadProperties(@NonNull String fileName) {
+	public static Properties loadProperties(String fileName) {
 		return loadProperties(new File(fileName));
 	}
 
-	public static Properties loadProperties(@NonNull IConfig fileName) {
+	public static Properties loadProperties(IConfig fileName) {
 		return loadProperties(new PropertyUtil().getResourceFile(fileName));
 	}
 
@@ -64,5 +62,6 @@ public class PropertyUtil {
 		return properties.get(key.getValue()).toString();
 	}
 
-	public PropertyUtil() {}
+	public PropertyUtil() {
+	}
 }

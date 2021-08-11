@@ -226,7 +226,7 @@ public class DatabaseUtil implements ILogger {
 			LOG.info("{}:[{}]", "Executing sql query", sqlQuery);
 			result = jdbcTemplate.queryForList(sqlQuery);
 			LOG.info("{}{}", "Executed sql query successfully:", result);
-			LOG.info(Logger.NEW_LINE + Logger.SUFFIX);
+			LOG.info(ReportLogger.NEW_LINE + ReportLogger.SUFFIX);
 		} catch (BadSqlGrammarException e) {
 			LOG.error(e.getLocalizedMessage());
 			throw new DatabaseException("Check the SQL query, " + e.getLocalizedMessage());
@@ -249,7 +249,7 @@ public class DatabaseUtil implements ILogger {
 			LOG.info("Connecting to database: " + system);
 			int rowsAffected = jdbcTemplate.update(sqlQuery);
 			LOG.info("Executed sql query successfully, number rows affected is " + rowsAffected);
-			LOG.info(Logger.NEW_LINE + Logger.SUFFIX);
+			LOG.info(ReportLogger.NEW_LINE + ReportLogger.SUFFIX);
 		} catch (BadSqlGrammarException e) {
 			LOG.error(e.getLocalizedMessage());
 			throw new DatabaseException(e.getLocalizedMessage());
@@ -288,7 +288,7 @@ public class DatabaseUtil implements ILogger {
 				while (mongoCursor.hasNext())
 					document.add(new JSONObject(mongoCursor.next().toJson()));
 				LOG.info("Executed mongo query successfully: " + document);
-				LOG.info(Logger.NEW_LINE + Logger.SUFFIX);
+				LOG.info(ReportLogger.NEW_LINE + ReportLogger.SUFFIX);
 				return document;
 			} catch (Exception e) {
 				LOG.error(e.getLocalizedMessage());
@@ -322,7 +322,7 @@ public class DatabaseUtil implements ILogger {
 				UpdateResult updateResult = mongoDatabase.getCollection(collection)
 						.updateOne(Filters.eq(searchKey, searchValue), Updates.set(updateKey, updateValue));
 				LOG.info("Number of mongo data updated: " + updateResult.getModifiedCount());
-				LOG.info(Logger.NEW_LINE + Logger.SUFFIX);
+				LOG.info(ReportLogger.NEW_LINE + ReportLogger.SUFFIX);
 			} catch (Exception e) {
 				LOG.error(e.getLocalizedMessage());
 				throw new DatabaseException("Unable to update the data: " + e.getLocalizedMessage());
@@ -351,7 +351,7 @@ public class DatabaseUtil implements ILogger {
 				DeleteResult deleteResult = mongoDatabase.getCollection(collection)
 						.deleteOne(Filters.eq(deleteKey, deleteValue));
 				LOG.info("Number of mongo data deleted: " + deleteResult.getDeletedCount());
-				LOG.info(Logger.NEW_LINE + Logger.SUFFIX);
+				LOG.info(ReportLogger.NEW_LINE + ReportLogger.SUFFIX);
 			} catch (Exception e) {
 				LOG.error(e.getLocalizedMessage());
 				throw new DatabaseException("Unable to delete the data: " + e.getLocalizedMessage());
@@ -373,7 +373,7 @@ public class DatabaseUtil implements ILogger {
 				keyAndValue.forEach((key, value) -> document.append(key, value));
 				mongoDatabase.getCollection(collection).insertOne(document);
 				LOG.info("Data inserted successfully");
-				LOG.info(Logger.NEW_LINE + Logger.SUFFIX);
+				LOG.info(ReportLogger.NEW_LINE + ReportLogger.SUFFIX);
 			} catch (Exception e) {
 				LOG.error(e.getLocalizedMessage());
 				throw new DatabaseException("Unable to insert the data: " + e.getLocalizedMessage());

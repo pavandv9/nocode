@@ -20,14 +20,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.underscore.lodash.Json.JsonStringBuilder.Step;
 import com.github.underscore.lodash.U;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.nocode.exception.HttpException;
-
-import lombok.NonNull;
 
 /**
  * @author Pavan.DV
@@ -48,7 +47,7 @@ public class JavaUtil implements ILogger {
 		return json;
 	}
 
-	public static String convertToHtml(@NonNull String string) {
+	public static String convertToHtml(String string) {
 		return string.replaceAll("\\r?\\n", "<br/>").replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 	}
 
@@ -109,12 +108,11 @@ public class JavaUtil implements ILogger {
 
 	public static Object getClassFromJsonArray(String filePath, Class<?> claz) {
 		JSONParser jsonParser = new JSONParser();
-		Gson gson = new Gson();
 		Object obj;
 		try {
 			obj = jsonParser.parse(new FileReader(filePath));
 			JSONArray jsonArray = (JSONArray) obj;
-			return gson.fromJson(jsonArray.toJSONString(), claz);
+			return new ObjectMapper().readValue(jsonArray.toString(), claz);
 		} catch (IOException | ParseException e) {
 			throw new JsonParseException("Unable to parse the json file: " + e.getLocalizedMessage());
 		}
@@ -122,12 +120,11 @@ public class JavaUtil implements ILogger {
 
 	public static Object getClassFromJsonObject(String filePath, Class<?> claz) {
 		JSONParser jsonParser = new JSONParser();
-		Gson gson = new Gson();
 		Object obj;
 		try {
 			obj = jsonParser.parse(new FileReader(filePath));
 			JSONObject jsonObject = (JSONObject) obj;
-			return gson.fromJson(jsonObject.toString(), claz);
+			return new ObjectMapper().readValue(jsonObject.toString(), claz);
 		} catch (IOException | ParseException e) {
 			throw new JsonParseException("Unable to parse the json file: " + e.getLocalizedMessage());
 		}
@@ -136,10 +133,10 @@ public class JavaUtil implements ILogger {
 	public static Object getJsonFromMap(Map<String, Object> obj) {
 		return new JSONObject(obj);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static Map<String, Object> getMapFromJson(Object json) {
-		return new Gson().fromJson(json.toString(), Map.class);
+	public static Map<String, Object> getMapFromObject(Object objectMap) {
+		return (Map<String, Object>) objectMap;
 	}
 
 	/**
@@ -158,5 +155,4 @@ public class JavaUtil implements ILogger {
 
 	private JavaUtil() {
 	}
-
 }
