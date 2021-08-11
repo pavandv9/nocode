@@ -1,0 +1,44 @@
+{
+	//reference body for the below dataprovider body
+	"body": {
+		"name": "test1",
+		"job": "leader"
+	},
+	"dataprovider": [
+		{
+			// if url is having pathparam {userId} add here.
+			"url": {
+				"userId": "2"
+			},
+			
+			//if body is not given under dataprovider it will read from above body
+			"body": {
+				"name": "ravi",
+				"job": "tester"
+			},
+			
+			//status code can be added here or under validate in sceanrios
+			"statuscode": 200,
+			
+			"resbody": {
+				"name": "ravi",
+				//default job leader will be added here from body
+				"id": "NOT_NULL"				//generic validation can be added here or under validate in sceanrios NULL, NOT_NULL, EMPTY, NOT_EMPTY
+
+			}
+		},
+		{
+			"url": {
+				"userId": "4"
+			},
+			"body": {
+				"name": "Ram",
+				"job": "dev"
+			},
+			"resbody": {
+				"name": "Ram",
+				"job": "dev"
+			}
+		}
+	]
+}
