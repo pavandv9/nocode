@@ -1,12 +1,15 @@
 package com.nocode.model;
 
-import java.util.Map;
-
+/**
+ * @author Pavan.DV
+ *
+ * @since 1.0.0
+ */
 public class Validate {
 
 	private int statuscode;
 	
-	private Map<String, Object> resbody;
+	private Object resbody;
 
 	public int getStatuscode() {
 		return statuscode;
@@ -16,11 +19,11 @@ public class Validate {
 		this.statuscode = statuscode;
 	}
 
-	public Map<String, Object> getResbody() {
+	public Object getResbody() {
 		return resbody;
 	}
 
-	public void setResbody(Map<String, Object> resbody) {
+	public void setResbody(Object resbody) {
 		this.resbody = resbody;
 	}
 }

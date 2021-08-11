@@ -2,9 +2,13 @@ package com.nocode.model;
 
 import java.util.List;
 
+/**
+ * @author Pavan.DV
+ *
+ * @since 1.0.0
+ */
 public class TestData {
 
-	private String scenarioid;
 	private Object body;
 	private List<TestDataProvider> dataprovider;
 
@@ -14,14 +18,6 @@ public class TestData {
 
 	public void setBody(Object body) {
 		this.body = body;
-	}
-
-	public String getScenarioid() {
-		return scenarioid;
-	}
-
-	public void setScenarioid(String scenarioid) {
-		this.scenarioid = scenarioid;
 	}
 
 	public List<TestDataProvider> getDataprovider() {

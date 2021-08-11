@@ -3,6 +3,11 @@ package com.nocode.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Pavan.DV
+ *
+ * @since 1.0.0
+ */
 public class ResBody {
 
 	private Map<String, Object> optionalParameters = new HashMap<>();

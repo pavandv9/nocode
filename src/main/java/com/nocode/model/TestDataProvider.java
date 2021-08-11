@@ -2,11 +2,17 @@ package com.nocode.model;
 
 import java.util.Map;
 
+/**
+ * @author Pavan.DV
+ *
+ * @since 1.0.0
+ */
 public class TestDataProvider {
 
 	private Map<String, Object> url;
 	private Object body;
-	private Map<String, Object> resbody;
+	private int statuscode;
+	private Object resbody;
 
 	public Map<String, Object> getUrl() {
 		return url;
@@ -23,12 +29,20 @@ public class TestDataProvider {
 	public void setBody(Object body) {
 		this.body = body;
 	}
+	
+	public int getStatuscode() {
+		return statuscode;
+	}
 
-	public Map<String, Object> getResbody() {
+	public void setStatuscode(int statuscode) {
+		this.statuscode = statuscode;
+	}
+
+	public Object getResbody() {
 		return resbody;
 	}
 
-	public void setResbody(Map<String, Object> resbody) {
+	public void setResbody(Object resbody) {
 		this.resbody = resbody;
 	}
 

@@ -3,6 +3,11 @@ package com.nocode.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Pavan.DV
+ *
+ * @since 1.0.0
+ */
 public class ScenarioSteps {
 
 	private String scenario;
@@ -52,6 +57,7 @@ public class ScenarioSteps {
 		this.validate = validate;
 	}
 
+	@SuppressWarnings("unchecked")
 	public ScenarioSteps copy() {
 		Request copyRequest = new Request();
 		copyRequest.setUrl(this.getRequest().getUrl());
@@ -70,9 +76,13 @@ public class ScenarioSteps {
 		Validate copyValidate = new Validate();
 		copyValidate.setStatuscode(this.getValidate().getStatuscode());
 		if (null != this.getValidate().getResbody()) {
-			Map<String, Object> copyBody = new HashMap<>();
-			this.getValidate().getResbody().forEach(copyBody::put);
-			copyValidate.setResbody(copyBody);
+			if (this.getValidate().getResbody() instanceof Map) {
+				Map<String, Object> copyResBody = (Map<String, Object>)this.getValidate().getResbody();
+				Map<String, Object> copyBody = new HashMap<>();
+				copyResBody.forEach(copyBody::put);
+				copyValidate.setResbody(copyBody);
+			}else
+				copyValidate.setResbody(this.getValidate().getResbody());
 		}
 		return new ScenarioSteps(this.getScenario(), this.getExecute(), copyRequest, copyValidate);
 	}

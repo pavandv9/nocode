@@ -16,7 +16,7 @@ public class Request {
 
 	private Map<String, Object> queryparam;
 
-	private String testdata;
+	private Object testdata;
 
 	public String getUrl() {
 		return url;
@@ -50,11 +50,11 @@ public class Request {
 		this.queryparam = queryparam;
 	}
 
-	public String getTestdata() {
+	public Object getTestdata() {
 		return testdata;
 	}
 
-	public void setTestdata(String testdata) {
+	public void setTestdata(Object testdata) {
 		this.testdata = testdata;
 	}
 
