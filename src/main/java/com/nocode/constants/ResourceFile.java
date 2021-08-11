@@ -9,7 +9,8 @@ package com.nocode.constants;
  */
 public enum ResourceFile implements IConfig {
 
-	CONFIG_FILE("config.properties"), MAIL_FILE("mail.properties"), DB_FILE("db.json"), DB_NOSQL_FILE("db.nosql.json");
+	CONFIG_FILE("config.properties"), MAIL_FILE("mail.properties"), DB_FILE("db.json"), DB_NOSQL_FILE("db.nosql.json"),
+	TEST("test"), TEST_DATA("testdata");
 
 	private String value;
 

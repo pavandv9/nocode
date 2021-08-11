@@ -10,7 +10,7 @@ package com.nocode.constants;
 public enum ConfigProperty implements IConfig {
 
 	ENV("env"), BASE_URL("base_url"), AUTH_TOKEN("auth_token"), USERNAME("user_name"), PASSWORD("passsword"),
-	AUTHORIZATION("authorization");
+	AUTHORIZATION("authorization"), EXECUTION_FILE("execution_file");
 
 	private String value;
 
