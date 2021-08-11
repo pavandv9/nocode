@@ -12,8 +12,14 @@ import org.testng.collections.Lists;
 import com.nocode.client.TestNGRunner;
 import com.nocode.model.ScenarioSteps;
 import com.nocode.utils.ILogger;
-import com.nocode.utils.Logger;
+import com.nocode.utils.ReportLogger;
 
+/**
+ * 
+ * @author Pavan.DV
+ *
+ * @since 1.0.0
+ */
 public class NoCodeListener implements ISuiteListener, ITestListener, ILogger {
 
 	private List<ITestResult> failureResults = Lists.newArrayList();
@@ -30,13 +36,13 @@ public class NoCodeListener implements ISuiteListener, ITestListener, ILogger {
 	public void onFinish(ISuite suite) {
 		if (!failureResults.isEmpty()) {
 			StringBuilder logFailedScenarios = new StringBuilder();
-			logFailedScenarios.append(Logger.NEW_LINE);
+			logFailedScenarios.append(ReportLogger.NEW_LINE);
 			logFailedScenarios.append("=============== Failed Scenarios ==============");
-			logFailedScenarios.append(Logger.NEW_LINE);
+			logFailedScenarios.append(ReportLogger.NEW_LINE);
 			for (ITestResult result : failureResults) {
 				ScenarioSteps scenarioSteps = (ScenarioSteps) result.getParameters()[1];
 				logFailedScenarios.append(scenarioSteps.getScenario());
-				logFailedScenarios.append(Logger.NEW_LINE);
+				logFailedScenarios.append(ReportLogger.NEW_LINE);
 			}
 			logFailedScenarios.append("===============================================");
 			LOG.info(logFailedScenarios.toString());
@@ -49,7 +55,7 @@ public class NoCodeListener implements ISuiteListener, ITestListener, ILogger {
 	}
 
 	private boolean isExecutionFlagFound() {
-		return Arrays.stream(TestNGRunner.getInstance().getExecutionFile())
+		return Arrays.stream(TestNGRunner.getInstance().getExecutionScenarios())
 				.anyMatch(executionFile -> executionFile.getExecute().equalsIgnoreCase("Y"));
 	}
 
