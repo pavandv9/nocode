@@ -40,7 +40,7 @@ import com.nocode.response.Response;
 import com.nocode.response.HttpResponse;
 import com.nocode.utils.ILogger;
 import com.nocode.utils.JavaUtil;
-import com.nocode.utils.Logger;
+import com.nocode.utils.ReportLogger;
 import com.nocode.utils.PropertyUtil;
 
 import lombok.NonNull;
@@ -67,13 +67,13 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 	 */
 	private HttpResponse processRequest() {
 		loadConfigFileAndValidateRequest();
-		Logger.logRequest(httpRequest);
+		ReportLogger.logRequest(httpRequest);
 		CloseableHttpResponse closeableHttpResponse = null;
 		HttpResponse httpResponse = null;
 		try {
 			closeableHttpResponse = getDefaultClient().execute(getHttpUriRequest(httpRequest.getHttpMethod()));
 			httpResponse = new Response(closeableHttpResponse);
-			Logger.logResponse(httpResponse);
+			ReportLogger.logResponse(httpResponse);
 		} catch (IOException e) {
 			LOG.error(e.getMessage());
 			e.printStackTrace();
@@ -305,14 +305,19 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 	}
 
 	private static void clearFiles() {
-		cleareTestOutPutFiles();
+		clearTestResultFiles();
 	}
 
-	private static void cleareTestOutPutFiles() {
+	private static void clearTestResultFiles() {
 		try {
-			Arrays.stream(new File("test-output").listFiles()).forEach(File::delete);
-			LOG.debug("test-output cleared from repository.");
-		} catch (NullPointerException e) {
+			File[] files = new File("test-result").listFiles();
+			Arrays.sort(files);
+			if (files.length >= 10) {
+				Arrays.stream(new File(files[0].getAbsolutePath()).listFiles()).forEach(File::delete);
+				files[0].delete();
+				LOG.debug("1 file cleared from test-result repository.");
+			}
+		} catch (Exception e) {
 			// Do nothing
 		}
 	}

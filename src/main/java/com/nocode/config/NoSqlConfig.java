@@ -16,7 +16,7 @@ import com.nocode.utils.PropertyUtil;
 /**
  * 
  * @author Pavan.DV
- * @since 1.1.0
+ * @since 1.0.0
  */
 public class NoSqlConfig {
 
