@@ -1,25 +1,36 @@
 package com.nocode.config;
 
+import java.io.File;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.aventstack.extentreports.AnalysisStrategy;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.ViewName;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * This class is responsible for generating the Extent html report.
  * 
  * @author Pavan.DV
- * @since 1.3
+ * @since 1.0.0
  */
 public class ExtentReportManager {
 
-	private static final String PROJECT_NAME="PROJECT_NAME";
-	private static final String REPORT_NAME ="REPORT_NAME";
+	private static final String PROJECT_NAME;
+	private static final String REPORT_NAME;
+	static ExtentSparkReporter spark;
+	
+	static {
+		String userDir = System.getProperty("user.dir");
+		PROJECT_NAME = Paths.get(userDir).getFileName().toString();
+		REPORT_NAME = String.format("%s_%s_%s", PROJECT_NAME, "report", new SimpleDateFormat("dd_MM_yy:hh:mm:ss").format(new Date()));
+		spark = new ExtentSparkReporter("test-results" + File.separator + REPORT_NAME);
+	}
     /**
      * The extent reports.
      */
@@ -52,7 +63,7 @@ public class ExtentReportManager {
     }
 
     private static ExtentSparkReporter getSparkReporter() {
-        ExtentSparkReporter spark = new ExtentSparkReporter("target" + File.separator + REPORT_NAME);
+        ExtentSparkReporter spark = new ExtentSparkReporter("test-result" + File.separator + REPORT_NAME);
         spark.viewConfigurer()
                 .viewOrder()
                 .as(new ViewName[]{
@@ -93,7 +104,7 @@ public class ExtentReportManager {
      *
      * @return the current test
      */
-    public synchronized static ExtentTest getCurrentTest() {
+    public static synchronized ExtentTest getCurrentTest() {
         return map.get(Thread.currentThread().getId());
     }
     
