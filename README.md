@@ -1,9 +1,9 @@
 # nocode
-**nocode** is a testing dependecy built for API testing. Where tester's can automate API's using this without writing a code.
+**nocode** is a testing dependency built for API testing. Where tester's can automate API's using this without writing a code.
 
 ------------
 ### Steps
-1. Create a maven project and the below depndency to pom.xml and build the project.
+1. Create a maven project and the below dependency to pom.xml and build the project.
 ```xml
 <dependency>
         <groupId>com.github.pavandv9</groupId>
