@@ -6,7 +6,7 @@ package com.nocode.response;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import com.nocode.exception.HttpException;
@@ -18,7 +18,7 @@ import com.nocode.utils.ILogger;
  * @since 1.0.0
  */
 public abstract class HttpResponse implements ILogger {
-	
+
 	protected int statusCode;
 
 	protected String statusMessage;
@@ -26,9 +26,9 @@ public abstract class HttpResponse implements ILogger {
 	protected StatusLine statusLine;
 
 	protected Object body;
-	
+
 	protected Map<String, Object> headers = new HashMap<String, Object>();
-	
+
 	/**
 	 * Set status line
 	 */
@@ -44,7 +44,6 @@ public abstract class HttpResponse implements ILogger {
 	 */
 	protected abstract void setHeaders();
 
-	
 	/**
 	 * Get status code of response
 	 */
@@ -80,7 +79,6 @@ public abstract class HttpResponse implements ILogger {
 		return headers;
 	}
 
-
 	/**
 	 * Parse response body.
 	 * 
@@ -90,8 +88,8 @@ public abstract class HttpResponse implements ILogger {
 	public String parse(String jsonpath) {
 		String value = "";
 		try {
-			DocumentContext documentContext = JsonPath.parse(getBody().toString());
-			value = documentContext.read(jsonpath).toString();
+			Object documentContext = Configuration.defaultConfiguration().jsonProvider().parse(getBody().toString());
+			value = JsonPath.read(documentContext, jsonpath);
 		} catch (PathNotFoundException e) {
 			throw new HttpException("JsonPath [\"" + jsonpath + "\"] not found");
 		}
@@ -103,5 +101,5 @@ public abstract class HttpResponse implements ILogger {
 		return "HttpResponse [statusCode=" + statusCode + ", statusMessage=" + statusMessage + ", statusLine="
 				+ statusLine + ", body=" + body + ", headers=" + headers + "]";
 	}
-	
+
 }
