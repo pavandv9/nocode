@@ -1,0 +1,44 @@
+[
+	{
+		"scenario": "Veriy able to create user and validate user is created and also update the user",
+		"execute": "y",
+		"steps": [
+			{
+				"step": "step1",
+				"request": {
+					"url": "https://reqres.in/api/users",
+					"method": "post",
+					"testdata": "integration_testdata.json"
+				},
+				"validate": {
+					"resbody": "NOT_NULL"
+				}
+			},
+			{
+				"step": "step2",
+				"request": {
+					"url": "https://reqres.in/api/users/{step1.resbody.id}",
+					"method": "get",
+					//Just for example
+					"headers": {
+						"Authorization": "{step1.resbody.authToken}"
+					}
+				},
+				"validate": {
+					"resbody": "EMPTY"
+				}
+			},
+			{
+				"step": "step3",
+				"request": {
+					"url": "https://reqres.in/api/users/2",
+					"method": "put",
+					"testdata": "integration_testdataupdate.json"
+				},
+				"validate": {
+					"resbody": "NOT_EMPTY"
+				}
+			}
+		]
+	}
+]
