@@ -9,7 +9,7 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.collections.Lists;
 
-import com.nocode.client.TestNGRunner;
+import com.nocode.client.NoCodeClient;
 import com.nocode.model.ScenarioSteps;
 import com.nocode.utils.ILogger;
 import com.nocode.utils.ReportLogger;
@@ -55,7 +55,7 @@ public class NoCodeListener implements ISuiteListener, ITestListener, ILogger {
 	}
 
 	private boolean isExecutionFlagFound() {
-		return Arrays.stream(TestNGRunner.getInstance().getExecutionScenarios())
+		return Arrays.stream(new NoCodeClient().getExecutionScenarios())
 				.anyMatch(executionFile -> executionFile.getExecute().equalsIgnoreCase("Y"));
 	}
 
