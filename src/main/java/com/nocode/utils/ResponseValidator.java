@@ -9,6 +9,8 @@ import static org.testng.Assert.assertTrue;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.json.JSONObject;
+
 import com.nocode.constants.AssertMessage;
 import com.nocode.constants.ValidatorConstants;
 import com.nocode.model.Validate;
@@ -76,10 +78,10 @@ public class ResponseValidator {
 			assertNotNull(actualResBody, AssertMessage.RESPONSE_BODY_FAILED);
 			break;
 		case EMPTY:
-			assertTrue(actualResBody.isEmpty(), AssertMessage.RESPONSE_BODY_FAILED);
+			assertTrue(new JSONObject(actualResBody).isEmpty(), AssertMessage.RESPONSE_BODY_EMPTY_FAILED);
 			break;
 		case NOT_EMPTY:
-			assertFalse(actualResBody.isEmpty(), AssertMessage.RESPONSE_BODY_FAILED);
+			assertTrue(!new JSONObject(actualResBody).isEmpty(), AssertMessage.RESPONSE_BODY_NOT_EMPTY_FAILED);
 			break;
 		default:
 			break;

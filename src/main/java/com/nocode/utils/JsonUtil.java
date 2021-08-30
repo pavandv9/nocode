@@ -11,7 +11,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import com.nocode.exception.HttpException;
@@ -55,8 +55,8 @@ public class JsonUtil {
 	public static String parse(String jsonBody, String jsonpath) {
 		String value = "";
 		try {
-			DocumentContext documentContext = JsonPath.parse(jsonBody);
-			value = documentContext.read(jsonpath).toString();
+			Object documentContext = Configuration.defaultConfiguration().jsonProvider().parse(jsonBody);
+			value = JsonPath.read(documentContext, jsonpath);
 		} catch (PathNotFoundException e) {
 			throw new HttpException("JsonPath [\"" + jsonpath + "\"] not found");
 		}

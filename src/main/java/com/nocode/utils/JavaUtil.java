@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -151,6 +152,27 @@ public class JavaUtil implements ILogger {
 		while (matcher.find())
 			unknownParams.add(matcher.group(1));
 		return unknownParams;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static Map<String, Object> deepMergeMaps(Map<String, Object> originalMap,
+			Map<String, Object> mapToUpdateOriginal) {
+		for (String key : mapToUpdateOriginal.keySet()) {
+			if (mapToUpdateOriginal.get(key) instanceof Map && originalMap.get(key) instanceof Map) {
+				Map<String, Object> originalChild = (Map<String, Object>) originalMap.get(key);
+				Map<String, Object> newChild = (Map<String, Object>) mapToUpdateOriginal.get(key);
+				originalMap.put(key, deepMergeMaps(originalChild, newChild));
+			} else if (mapToUpdateOriginal.get(key) instanceof List && originalMap.get(key) instanceof List) {
+				List<Object> originalChild = (List<Object>) originalMap.get(key);
+				List<?> newChild = (List<?>) mapToUpdateOriginal.get(key);
+				for (Object each : newChild) {
+					if (!originalChild.contains(each))
+						originalChild.add(each);
+				}
+			} else
+				originalMap.put(key, mapToUpdateOriginal.get(key));
+		}
+		return originalMap;
 	}
 
 	private JavaUtil() {
