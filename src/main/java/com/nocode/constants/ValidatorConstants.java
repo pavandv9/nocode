@@ -1,6 +1,14 @@
 package com.nocode.constants;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Enum ValidatorConstants.
+ */
 public enum ValidatorConstants {
 
-	NULL, NOT_NULL, EMPTY, NOT_EMPTY;
+	/** The null. */
+	NULL, /** The not null. */
+ NOT_NULL, /** The empty. */
+ EMPTY, /** The not empty. */
+ NOT_EMPTY;
 }

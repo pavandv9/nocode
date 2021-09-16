@@ -3,62 +3,135 @@ package com.nocode.model;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Pavan.DV
+ * The Class ScenarioSteps.
  *
+ * @author Pavan.DV
  * @since 1.0.0
  */
 public class ScenarioSteps {
 
+	/** The scenario. */
 	private String scenario;
+	
+	/** The execute. */
 	private String execute;
+	
+	/** The request. */
 	private Request request;
+	
+	/** The validate. */
 	private Validate validate;
+	
+	/** The steps. */
 	private Steps[] steps;
 
+	/**
+	 * Gets the execute.
+	 *
+	 * @return the execute
+	 */
 	public String getExecute() {
 		return execute;
 	}
 
+	/**
+	 * Sets the execute.
+	 *
+	 * @param execute the new execute
+	 */
 	public void setExecute(String execute) {
 		this.execute = execute;
 	}
 
+	/**
+	 * Gets the scenario.
+	 *
+	 * @return the scenario
+	 */
 	public String getScenario() {
 		return scenario;
 	}
 
+	/**
+	 * Sets the scenario.
+	 *
+	 * @param scenario the new scenario
+	 */
 	public void setScenario(String scenario) {
 		this.scenario = scenario;
 	}
 
+	/**
+	 * Gets the request.
+	 *
+	 * @return the request
+	 */
 	public Request getRequest() {
 		return request;
 	}
 
+	/**
+	 * Sets the request.
+	 *
+	 * @param request the new request
+	 */
 	public void setRequest(Request request) {
 		this.request = request;
 	}
 
+	/**
+	 * Gets the validate.
+	 *
+	 * @return the validate
+	 */
 	public Validate getValidate() {
 		return validate;
 	}
 
+	/**
+	 * Sets the validate.
+	 *
+	 * @param validate the new validate
+	 */
 	public void setValidate(Validate validate) {
 		this.validate = validate;
 	}
 
+	/**
+	 * Gets the steps.
+	 *
+	 * @return the steps
+	 */
 	public Steps[] getSteps() {
 		return steps;
 	}
 
+	/**
+	 * Sets the steps.
+	 *
+	 * @param steps the new steps
+	 */
 	public void setSteps(Steps[] steps) {
 		this.steps = steps;
 	}
 
+	/**
+	 * Instantiates a new scenario steps.
+	 */
 	public ScenarioSteps() {
 	}
 
+	/**
+	 * Instantiates a new scenario steps.
+	 *
+	 * @param sceanario the sceanario
+	 * @param execute the execute
+	 * @param request the request
+	 * @param validate the validate
+	 * @param steps the steps
+	 */
 	public ScenarioSteps(String sceanario, String execute, Request request, Validate validate, Steps[] steps) {
 		this.scenario = sceanario;
 		this.execute = execute;
@@ -67,6 +140,11 @@ public class ScenarioSteps {
 		this.steps = steps;
 	}
 
+	/**
+	 * Copy.
+	 *
+	 * @return the scenario steps
+	 */
 	public ScenarioSteps copy() {
 		if (null != this.getRequest() && null != this.getValidate())
 			return copyRequestValidateObject();
@@ -74,6 +152,11 @@ public class ScenarioSteps {
 			return copyStepsObject();
 	}
 
+	/**
+	 * Copy request validate object.
+	 *
+	 * @return the scenario steps
+	 */
 	@SuppressWarnings("unchecked")
 	private ScenarioSteps copyRequestValidateObject() {
 		Request copyRequest = new Request();
@@ -105,6 +188,11 @@ public class ScenarioSteps {
 
 	}
 
+	/**
+	 * Copy steps object.
+	 *
+	 * @return the scenario steps
+	 */
 	@SuppressWarnings("unchecked")
 	private ScenarioSteps copyStepsObject() {
 		Steps[] copySteps = new Steps[steps.length];

@@ -33,7 +33,7 @@
 				"request": {
 					"url": "https://reqres.in/api/users/2",
 					"method": "put",
-					"testdata": "integration_testdataupdate.json"
+					"testdata": "integration_testdata_update.json"
 				},
 				"validate": {
 					"resbody": "NOT_EMPTY"

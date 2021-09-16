@@ -9,13 +9,22 @@ import java.util.Map.Entry;
 import com.nocode.response.HttpResponse;
 import com.nocode.utils.JavaUtil;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Pavan.DV
+ * The Class MultiStepClient.
  *
+ * @author Pavan.DV
  * @since 2.0.0
  */
 public class MultiStepClient {
 
+	/**
+	 * Gets the url.
+	 *
+	 * @param url the url
+	 * @param stepWithHttpResponse the step with http response
+	 * @return the url
+	 */
 	String getUrl(String url, Map<String, HttpResponse> stepWithHttpResponse) {
 		if (null != url && !stepWithHttpResponse.isEmpty() && url.contains("{")) {
 			String urlWithUnkownParam = JavaUtil.retrieveUnknownParams(url).stream().findFirst().get();
@@ -33,6 +42,13 @@ public class MultiStepClient {
 		return url;
 	}
 
+	/**
+	 * Gets the headers.
+	 *
+	 * @param headers the headers
+	 * @param stepWithHttpResponse the step with http response
+	 * @return the headers
+	 */
 	Map<String, Object> getHeaders(Map<String, Object> headers, Map<String, HttpResponse> stepWithHttpResponse) {
 		if (null != headers && !stepWithHttpResponse.isEmpty()) {
 			for (Entry<String, Object> header : headers.entrySet()) {
@@ -56,6 +72,13 @@ public class MultiStepClient {
 		return headers;
 	}
 
+	/**
+	 * Gets the query params.
+	 *
+	 * @param queryParams the query params
+	 * @param stepWithHttpResponse the step with http response
+	 * @return the query params
+	 */
 	Map<String, Object> getQueryParams(Map<String, Object> queryParams,
 			Map<String, HttpResponse> stepWithHttpResponse) {
 		if (null != queryParams && !stepWithHttpResponse.isEmpty()) {
@@ -79,6 +102,13 @@ public class MultiStepClient {
 		return queryParams;
 	}
 
+	/**
+	 * Gets the request body.
+	 *
+	 * @param body the body
+	 * @param stepWithHttpResponse the step with http response
+	 * @return the request body
+	 */
 	Object getRequestBody(Object body, Map<String, HttpResponse> stepWithHttpResponse) {
 		if (null != body && !stepWithHttpResponse.isEmpty()) {
 			Map<String, Object> mapBody = JavaUtil.getMapFromObject(body);

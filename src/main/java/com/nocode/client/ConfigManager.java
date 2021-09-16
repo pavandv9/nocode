@@ -12,12 +12,16 @@ import com.nocode.utils.PropertyUtil;
 
 import lombok.NonNull;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class ConfigManager.
+ *
  * @author Pavan.DV
  * @since 1.0.0
  */
 public class ConfigManager {
 
+	/** The props. */
 	static Properties props;
 
 	/**
@@ -29,8 +33,8 @@ public class ConfigManager {
 
 	/**
 	 * Get value from config.properties file.
-	 * 
-	 * @param key
+	 *
+	 * @param key the key
 	 * @return value
 	 */
 	public static String get(@NonNull String key) {
@@ -39,8 +43,8 @@ public class ConfigManager {
 
 	/**
 	 * Get value from config.properties file.
-	 * 
-	 * @param key
+	 *
+	 * @param key the key
 	 * @return value
 	 */
 	public static String get(@NonNull IConfig key) {

@@ -29,12 +29,21 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import com.nocode.exception.HttpException;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class JavaUtil.
+ *
  * @author Pavan.DV
  * @since 1.0.0
  */
 public class JavaUtil implements ILogger {
 
+	/**
+	 * To json.
+	 *
+	 * @param object the object
+	 * @return the string
+	 */
 	public static String toJson(Object object) {
 		String json = "";
 		if (null == object) {
@@ -48,10 +57,22 @@ public class JavaUtil implements ILogger {
 		return json;
 	}
 
+	/**
+	 * Convert to html.
+	 *
+	 * @param string the string
+	 * @return the string
+	 */
 	public static String convertToHtml(String string) {
 		return string.replaceAll("\\r?\\n", "<br/>").replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 	}
 
+	/**
+	 * Pretty json.
+	 *
+	 * @param json the json
+	 * @return the string
+	 */
 	public static String prettyJson(Object json) {
 		if (null == json) {
 			return "<nil>";
@@ -64,10 +85,22 @@ public class JavaUtil implements ILogger {
 		}
 	}
 
+	/**
+	 * Pretty xml.
+	 *
+	 * @param xml the xml
+	 * @return the string
+	 */
 	public static String prettyXml(Object xml) {
 		return xml == null ? "<nil>" : U.formatXml(xml.toString());
 	}
 
+	/**
+	 * Checks if is json valid.
+	 *
+	 * @param object the object
+	 * @return true, if is json valid
+	 */
 	public static boolean isJsonValid(Object object) {
 		try {
 			new Gson().fromJson(object.toString(), Object.class);
@@ -77,6 +110,12 @@ public class JavaUtil implements ILogger {
 		}
 	}
 
+	/**
+	 * Execute shell command.
+	 *
+	 * @param shellCmd the shell cmd
+	 * @return the string
+	 */
 	public static String executeShellCommand(String... shellCmd) {
 		try {
 			ProcessBuilder builder = new ProcessBuilder(shellCmd);
@@ -99,14 +138,33 @@ public class JavaUtil implements ILogger {
 		}
 	}
 
+	/**
+	 * Gets the current date.
+	 *
+	 * @param pattern the pattern
+	 * @return the current date
+	 */
 	public static String getCurrentDate(String pattern) {
 		return new SimpleDateFormat(pattern).format(new Date());
 	}
 
+	/**
+	 * To xml.
+	 *
+	 * @param obj the obj
+	 * @return the string
+	 */
 	public static String toXml(Object obj) {
 		return U.jsonToXml(toJson(obj));
 	}
 
+	/**
+	 * Gets the class from json array.
+	 *
+	 * @param filePath the file path
+	 * @param claz the claz
+	 * @return the class from json array
+	 */
 	public static Object getClassFromJsonArray(String filePath, Class<?> claz) {
 		JSONParser jsonParser = new JSONParser();
 		Object obj;
@@ -119,6 +177,13 @@ public class JavaUtil implements ILogger {
 		}
 	}
 
+	/**
+	 * Gets the class from json object.
+	 *
+	 * @param filePath the file path
+	 * @param claz the claz
+	 * @return the class from json object
+	 */
 	public static Object getClassFromJsonObject(String filePath, Class<?> claz) {
 		JSONParser jsonParser = new JSONParser();
 		Object obj;
@@ -131,19 +196,31 @@ public class JavaUtil implements ILogger {
 		}
 	}
 
+	/**
+	 * Gets the json from map.
+	 *
+	 * @param obj the obj
+	 * @return the json from map
+	 */
 	public static Object getJsonFromMap(Map<String, Object> obj) {
 		return new JSONObject(obj);
 	}
 
+	/**
+	 * Gets the map from object.
+	 *
+	 * @param objectMap the object map
+	 * @return the map from object
+	 */
 	@SuppressWarnings("unchecked")
 	public static Map<String, Object> getMapFromObject(Object objectMap) {
 		return (Map<String, Object>) objectMap;
 	}
 
 	/**
-	 * Get unknown parameters from string enclosed between {}
-	 * 
-	 * @param str
+	 * Get unknown parameters from string enclosed between {}.
+	 *
+	 * @param str the str
 	 * @return unknown parameters
 	 */
 	public static Set<String> retrieveUnknownParams(String str) {
@@ -154,6 +231,13 @@ public class JavaUtil implements ILogger {
 		return unknownParams;
 	}
 
+	/**
+	 * Deep merge maps.
+	 *
+	 * @param originalMap the original map
+	 * @param mapToUpdateOriginal the map to update original
+	 * @return the map
+	 */
 	@SuppressWarnings("unchecked")
 	public static Map<String, Object> deepMergeMaps(Map<String, Object> originalMap,
 			Map<String, Object> mapToUpdateOriginal) {
@@ -175,6 +259,9 @@ public class JavaUtil implements ILogger {
 		return originalMap;
 	}
 
+	/**
+	 * Instantiates a new java util.
+	 */
 	private JavaUtil() {
 	}
 }

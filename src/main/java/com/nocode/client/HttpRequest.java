@@ -12,9 +12,12 @@ import org.springframework.lang.NonNull;
 import com.nocode.constants.HttpMethod;
 import com.nocode.utils.RequestUtil;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Pavan.DV
+ * The Class HttpRequest.
  *
+ * @author Pavan.DV
+ * 
  *         <p>
  *         <b>apiNote</b> HttpRequest which forms the request. Pass HttpRequest
  *         object to the execute method which is available in getHttpClient of
@@ -23,73 +26,94 @@ import com.nocode.utils.RequestUtil;
  */
 public class HttpRequest {
 
+	/** The body. */
 	private Object body;
 
+	/** The base url. */
 	private String baseUrl;
 
+	/** The end point. */
 	private String endPoint;
 
+	/** The http method. */
 	private HttpMethod httpMethod;
 
+	/** The headers. */
 	private Map<String, Object> headers = new HashMap<>();
 
+	/** The path params. */
 	private Map<String, Object> pathParams = new HashMap<>();
 
+	/** The query params. */
 	private Map<String, Object> queryParams = new HashMap<>();
 
 	/**
-	 * Get request body
+	 * Get request body.
+	 *
+	 * @return the body
 	 */
 	public Object getBody() {
 		return body;
 	}
 
 	/**
-	 * Get request base url
+	 * Get request base url.
+	 *
+	 * @return the base url
 	 */
 	public String getBaseUrl() {
 		return baseUrl;
 	}
 
 	/**
-	 * Get request endpoint
+	 * Get request endpoint.
+	 *
+	 * @return the end point
 	 */
 	public String getEndPoint() {
 		return endPoint;
 	}
 
 	/**
-	 * Get request httpMethod
+	 * Get request httpMethod.
+	 *
+	 * @return the http method
 	 */
 	public HttpMethod getHttpMethod() {
 		return httpMethod;
 	}
 
 	/**
-	 * Get request headers
+	 * Get request headers.
+	 *
+	 * @return the headers
 	 */
 	public Map<String, Object> getHeaders() {
 		return headers;
 	}
 
 	/**
-	 * Get request path parameters
+	 * Get request path parameters.
+	 *
+	 * @return the path params
 	 */
 	public Map<String, Object> getPathParams() {
 		return pathParams;
 	}
 
 	/**
-	 * Get request query parameters
+	 * Get request query parameters.
+	 *
+	 * @return the query params
 	 */
 	public Map<String, Object> getQueryParams() {
 		return queryParams;
 	}
 
 	/**
-	 * Add base url to the HttpRequest
-	 * 
-	 * @param url
+	 * Add base url to the HttpRequest.
+	 *
+	 * @param url the url
 	 * @return this
 	 */
 	public HttpRequest addBaseUrl(@NonNull String url) {
@@ -100,9 +124,9 @@ public class HttpRequest {
 	}
 
 	/**
-	 * Add base url to the HttpRequest
-	 * 
-	 * @param url
+	 * Add base url to the HttpRequest.
+	 *
+	 * @param url the url
 	 * @return this
 	 */
 	public HttpRequest addBaseUrl(@NonNull Object url) {
@@ -113,9 +137,9 @@ public class HttpRequest {
 	}
 
 	/**
-	 * Add path parameters to the HttpRequest
-	 * 
-	 * @param pathParams
+	 * Add path parameters to the HttpRequest.
+	 *
+	 * @param pathParams the path params
 	 * @return this
 	 */
 	public HttpRequest addPathParamValues(@NonNull Map<String, Object> pathParams) {
@@ -145,8 +169,8 @@ public class HttpRequest {
 	}
 
 	/**
-	 * Add query parameters
-	 * 
+	 * Add query parameters.
+	 *
 	 * @param queryParams to the HttpRequest
 	 * @return this
 	 */
@@ -158,8 +182,8 @@ public class HttpRequest {
 	}
 
 	/**
-	 * Add query parameters to the HttpRequest
-	 * 
+	 * Add query parameters to the HttpRequest.
+	 *
 	 * @param name  of the query parameter
 	 * @param value of the query parameter
 	 * @return this
@@ -170,9 +194,9 @@ public class HttpRequest {
 	}
 
 	/**
-	 * Add body to the HttpRequest
-	 * 
-	 * @param body
+	 * Add body to the HttpRequest.
+	 *
+	 * @param body the body
 	 * @return this
 	 */
 	public HttpRequest addBody(Object body) {
@@ -181,9 +205,9 @@ public class HttpRequest {
 	}
 
 	/**
-	 * Add HttpMethod to the HttpRequest
-	 * 
-	 * @param httpMethod
+	 * Add HttpMethod to the HttpRequest.
+	 *
+	 * @param httpMethod the http method
 	 * @return this
 	 */
 	public HttpRequest addMethod(@NonNull HttpMethod httpMethod) {
@@ -195,8 +219,8 @@ public class HttpRequest {
 	 * Add end point to the HttpRequest. <br>
 	 * Add path parameters to end point if api request has it, by enclosing in
 	 * flower braces {pathParam}
-	 * 
-	 * @param endpoint
+	 *
+	 * @param endpoint the endpoint
 	 * @return this
 	 *         <p>
 	 *         <b>example</b> https://example.com/demo/{pathName}
@@ -207,9 +231,9 @@ public class HttpRequest {
 	}
 
 	/**
-	 * Add headers to the HttpRequest
-	 * 
-	 * @param headers
+	 * Add headers to the HttpRequest.
+	 *
+	 * @param headers the headers
 	 * @return this
 	 */
 	public HttpRequest addHeader(Map<String, Object> headers) {
@@ -220,10 +244,10 @@ public class HttpRequest {
 	}
 
 	/**
-	 * Add header to the HttpRequest
-	 * 
-	 * @param name
-	 * @param value
+	 * Add header to the HttpRequest.
+	 *
+	 * @param name the name
+	 * @param value the value
 	 * @return this
 	 */
 	public HttpRequest addHeader(@NonNull String name, Object value) {
@@ -233,10 +257,10 @@ public class HttpRequest {
 	}
 
 	/**
-	 * Add header to the HttpRequest
-	 * 
-	 * @param name
-	 * @param value
+	 * Add header to the HttpRequest.
+	 *
+	 * @param name the name
+	 * @param value the value
 	 * @return this
 	 */
 	public HttpRequest addHeader(@NonNull HttpHeaders name, Object value) {
@@ -245,25 +269,41 @@ public class HttpRequest {
 		return this;
 	}
 
+	/**
+	 * Adds the content type.
+	 *
+	 * @param value the value
+	 * @return the http request
+	 */
 	public HttpRequest addContentType(@NonNull String value) {
 		addHeader("Content-Type", value);
 		return this;
 	}
 
+	/**
+	 * Adds the authorization.
+	 *
+	 * @param value the value
+	 * @return the http request
+	 */
 	public HttpRequest addAuthorization(@NonNull String value) {
 		addHeader("Authorization", value);
 		return this;
 	}
 
 	/**
-	 * Get content type
+	 * Get content type.
+	 *
+	 * @return the content type
 	 */
 	public String getContentType() {
 		return RequestUtil.getContentType(headers);
 	}
 
 	/**
-	 * Get authorization
+	 * Get authorization.
+	 *
+	 * @return the authorization
 	 */
 	public String getAuthorization() {
 		return RequestUtil.getAuthorization(headers);

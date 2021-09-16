@@ -21,22 +21,34 @@ import com.nocode.model.Steps;
 import com.nocode.response.HttpResponse;
 import com.nocode.utils.ResponseValidator;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
- * @author Pavan.DV
+ * The Class TestNGRunner.
  *
+ * @author Pavan.DV
  * @since 1.0.0
  */
 @Listeners(ReportListener.class)
 public class TestNGRunner implements ITest {
 
+	/** The test name. */
 	private ThreadLocal<String> testName = new ThreadLocal<>();
+	
+	/** The m step client. */
 	private MultiStepClient mStepClient = new MultiStepClient();
 
+	/**
+	 * Gets the single instance of TestNGRunner.
+	 *
+	 * @return single instance of TestNGRunner
+	 */
 	public static TestNGRunner getInstance() {
 		return new TestNGRunner();
 	}
 
+	/**
+	 * Run test class.
+	 */
 	public void runTestClass() {
 		TestNG suite = new TestNG();
 		suite.addListener(new NoCodeListener());
@@ -46,6 +58,11 @@ public class TestNGRunner implements ITest {
 		suite.run();
 	}
 
+	/**
+	 * Data provider.
+	 *
+	 * @return the object[][]
+	 */
 	@DataProvider
 	private Object[][] dataProvider() {
 		ScenarioSteps[] testScenarios = new NoCodeClient().getExecutionFile();
@@ -60,6 +77,12 @@ public class TestNGRunner implements ITest {
 		return data;
 	}
 
+	/**
+	 * Run.
+	 *
+	 * @param description the description
+	 * @param scenario the scenario
+	 */
 	@Test(dataProvider = "dataProvider")
 	private void run(String description, ScenarioSteps scenario) {
 		if (null == scenario.getSteps())
@@ -68,17 +91,34 @@ public class TestNGRunner implements ITest {
 			executeMultiSteps(description, scenario);
 	}
 
+	/**
+	 * Gets the test name.
+	 *
+	 * @return the test name
+	 */
 	@Override
 	public String getTestName() {
 		return testName.get();
 	}
 
+	/**
+	 * Before method.
+	 *
+	 * @param testData the test data
+	 * @param ctx the ctx
+	 */
 	@BeforeMethod
 	public void beforeMethod(Object[] testData, ITestContext ctx) {
 		testName.set(testData[0].toString());
 		ctx.setAttribute("testName", testName.get());
 	}
 
+	/**
+	 * Execute scenario steps.
+	 *
+	 * @param description the description
+	 * @param scenario the scenario
+	 */
 	private void executeScenarioSteps(String description, ScenarioSteps scenario) {
 		HttpRequest httpRequest = new HttpRequest();
 		httpRequest.addMethod(HttpMethod.valueOf(scenario.getRequest().getMethod().toUpperCase()))
@@ -88,6 +128,12 @@ public class TestNGRunner implements ITest {
 		new ResponseValidator(scenario.getValidate(), httpResponse);
 	}
 
+	/**
+	 * Execute multi steps.
+	 *
+	 * @param description the description
+	 * @param scenario the scenario
+	 */
 	private void executeMultiSteps(String description, ScenarioSteps scenario) {
 		Arrays.sort(scenario.getSteps(), Comparator.comparing(Steps::getStep));
 		Map<String, HttpResponse> stepWithResponse = new HashMap<>();

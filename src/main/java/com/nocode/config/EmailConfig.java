@@ -18,18 +18,28 @@ import com.nocode.exception.MailException;
 import com.nocode.utils.ILogger;
 import com.nocode.utils.PropertyUtil;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Pavan.DV
+ * The Class EmailConfig.
  *
+ * @author Pavan.DV
  * @since 1.0.0
  */
 @Configuration
 public class EmailConfig implements ILogger {
 
+	/**
+	 * Instantiates a new email config.
+	 */
 	public EmailConfig() {
 		PropertyUtil.loadProperties(ResourceFile.MAIL_FILE);
 	}
 
+	/**
+	 * Gets the java mail sender.
+	 *
+	 * @return the java mail sender
+	 */
 	@Bean
 	public JavaMailSender getJavaMailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -70,6 +80,12 @@ public class EmailConfig implements ILogger {
 		return mailSender;
 	}
 
+	/**
+	 * Email template.
+	 *
+	 * @param testcases the testcases
+	 * @return the simple mail message
+	 */
 	@Bean
 	public SimpleMailMessage emailTemplate(StringBuilder testcases) {
 		SimpleMailMessage message = new SimpleMailMessage();
@@ -89,6 +105,12 @@ public class EmailConfig implements ILogger {
 		return message;
 	}
 
+	/**
+	 * Split email id.
+	 *
+	 * @param ids the ids
+	 * @return the string[]
+	 */
 	public String[] splitEmailId(String ids) {
 		return ids.split(",");
 	}

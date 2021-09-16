@@ -20,20 +20,34 @@ import com.nocode.exception.DatabaseException;
 import com.nocode.utils.JsonUtil;
 import com.nocode.utils.PropertyUtil;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Pavan.DV
+ * The Class DataSourceConfig.
  *
+ * @author Pavan.DV
  * @since 1.0.0
  */
 @Configuration
 public class DataSourceConfig {
 
+	/**
+	 * Gets the data source.
+	 *
+	 * @param system the system
+	 * @return the data source
+	 */
 	@Bean
 	public DataSource getDataSource(String system) {
 		DataSourceBuilder<?> dataSourceBuilder = buildDataSource(system);
 		return dataSourceBuilder.build();
 	}
 
+	/**
+	 * Builds the data source.
+	 *
+	 * @param system the system
+	 * @return the data source builder
+	 */
 	private DataSourceBuilder<?> buildDataSource(String system) {
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
 		JSONArray jsonArr = JsonUtil.readJsonFile(new PropertyUtil().getResourceFile(ResourceFile.DB_FILE));

@@ -1,16 +1,16 @@
 [
 	{
-		"scenario": "Veriy able to create users with different data",
+		"scenario": "Verify able to create users with different data",
 		"execute": "y",
 		"request": {
 			"url": "https://reqres.in/api/users/{userId}",
 			"method": "post",
-			"testdata": "testdata_createuser.json"
+			"testdata": "functioanl_testdata_createuser.json"
 		},
 		"validate": {
 			"statuscode": 201,
 			"resbody": {
-				"testdata":"testdata_createuser.json"
+				"testdata":"functioanl_testdata_createuser.json"
 			}
 		}
 	},
@@ -36,12 +36,12 @@
 		"request": {
 			"url": "https://reqres.in/api/users/{userId}",
 			"method": "GET",
-			"testdata":"testdata_getapi.json"
+			"testdata":"functional_testdata_getapi.json"
 		},
 		"validate": {
 			"statuscode": 200,
 			"resbody": {
-				"testdata":"testdata_getapi.json"
+				"testdata":"functional_testdata_getapi.json"
 			}
 		}
 	}

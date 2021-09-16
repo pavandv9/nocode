@@ -13,13 +13,21 @@ import com.nocode.constants.ResourceFile;
 import com.nocode.utils.JsonUtil;
 import com.nocode.utils.PropertyUtil;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class NoSqlConfig.
+ *
  * @author Pavan.DV
  * @since 1.0.0
  */
 public class NoSqlConfig {
 
+	/**
+	 * Gets the mongo connection.
+	 *
+	 * @param system the system
+	 * @return the mongo connection
+	 */
 	public MongoDatabase getMongoConnection(String system) {
 		JSONArray jsonArr = JsonUtil.readJsonFile(new PropertyUtil().getResourceFile(ResourceFile.DB_NOSQL_FILE));
 		String env = ConfigManager.get(ConfigProperty.ENV);

@@ -18,22 +18,44 @@ import com.nocode.constants.MailProperty;
 import com.nocode.constants.ResourceFile;
 import com.nocode.response.HttpResponse;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class ReportLogger.
+ *
  * @author Pavan.DV
  * @since 1.0.0
  */
 public class ReportLogger implements ILogger {
 
+	/**
+	 * Instantiates a new report logger.
+	 */
 	private ReportLogger() {
 	}
 
+	/** The http request. */
 	private static HttpRequest httpRequest;
+	
+	/** The Constant NEW_LINE. */
 	public static final String NEW_LINE = System.lineSeparator();
-	private static final String FORMAT = "%1$-15s%2$-20s%3$-50s";
-	private static final String FORMAT_TEXT = FORMAT + NEW_LINE;
+	
+	/** The Constant FORMAT. */
+	public static final String FORMAT = "%1$-15s%2$-20s%3$-50s";
+	
+	/** The Constant FORMAT_TEXT. */
+	public static final String FORMAT_TEXT = FORMAT + NEW_LINE;
+	
+	/** The Constant SUFFIX. */
 	public static final String SUFFIX = "=============================================================";
+	
+	/** The Constant RESPONSE_BODY. */
 	private static final String RESPONSE_BODY = "Response body";
 
+	/**
+	 * Log request.
+	 *
+	 * @param httpRequest the http request
+	 */
 	public static void logRequest(HttpRequest httpRequest) {
 		ReportLogger.httpRequest = httpRequest;
 		String prefix = NEW_LINE + "=========================  Request  =========================" + NEW_LINE;
@@ -48,9 +70,14 @@ public class ReportLogger implements ILogger {
 		String requestLog = prefix + builder.toString() + SUFFIX;
 		LOG.info(requestLog);
 		Reporter.log(JavaUtil.convertToHtml(prefix) + JavaUtil.convertToHtml(builder.toString()) + SUFFIX);
-//		ReportUtil.logReqRes(Status.INFO, requestLog);
+		ReportUtil.logReqRes(requestLog);
 	}
 
+	/**
+	 * Log response.
+	 *
+	 * @param response the response
+	 */
 	public static void logResponse(HttpResponse response) {
 		String prefix = NEW_LINE + "=========================  Response  =========================" + NEW_LINE;
 		StringBuilder builder = new StringBuilder();
@@ -58,13 +85,18 @@ public class ReportLogger implements ILogger {
 		builder.append(String.format(FORMAT_TEXT, "Status message", ":", response.getStatusLine().getStatusMessage()));
 		builder.append(String.format(FORMAT_TEXT, "Headers", ":", prettyMap(response.getHeaders())));
 		appendBody(builder, response);
-		builder.append(String.format(FORMAT_TEXT, "Find the report here", ":", "attach report link here"));
 		String responseLog = prefix + builder.toString() + SUFFIX;
 		LOG.info(responseLog);
 		Reporter.log(JavaUtil.convertToHtml(prefix) + JavaUtil.convertToHtml(builder.toString()) + SUFFIX);
-//		ReportUtil.logReqRes(Status.PASS, responseLog);
+		ReportUtil.logReqRes(responseLog);
 	}
 
+	/**
+	 * Pretty map.
+	 *
+	 * @param map the map
+	 * @return the string
+	 */
 	private static String prettyMap(Map<String, Object> map) {
 		StringBuilder sb = new StringBuilder();
 		Iterator<Entry<String, Object>> iter = map.entrySet().iterator();
@@ -81,6 +113,13 @@ public class ReportLogger implements ILogger {
 		return sb.toString().isEmpty() ? "<nil>" : sb.toString();
 	}
 
+	/**
+	 * Append body.
+	 *
+	 * @param builder the builder
+	 * @param response the response
+	 * @return the string builder
+	 */
 	private static StringBuilder appendBody(StringBuilder builder, HttpResponse response) {
 		if (!String.valueOf(response.getStatusLine().getStatusCode()).startsWith("5")) {
 			try {
@@ -106,17 +145,30 @@ public class ReportLogger implements ILogger {
 		return builder;
 	}
 
+	/**
+	 * Format end point.
+	 *
+	 * @return the string
+	 */
 	private static String formatEndPoint() {
 		return (httpRequest.getEndPoint() == null || httpRequest.getEndPoint().isEmpty()) ? "<nil>"
 				: httpRequest.getEndPoint();
 	}
 
+	/**
+	 * Gets the request body.
+	 *
+	 * @return the request body
+	 */
 	private static String getRequestBody() {
 		return httpRequest.getContentType().contains("json")
 				? JavaUtil.prettyJson(JavaUtil.toJson(httpRequest.getBody()))
 				: JavaUtil.prettyXml(JavaUtil.toXml(httpRequest.getBody()));
 	}
 
+	/**
+	 * Log mail properties.
+	 */
 	public static void logMailProperties() {
 		String prefix = NEW_LINE + "=========================  Mail Properties  =========================" + NEW_LINE;
 		StringBuilder builder = new StringBuilder();
@@ -135,6 +187,9 @@ public class ReportLogger implements ILogger {
 		Reporter.log(JavaUtil.convertToHtml(prefix) + JavaUtil.convertToHtml(builder.toString()) + SUFFIX);
 	}
 
+	/**
+	 * Log mail request.
+	 */
 	public static void logMailRequest() {
 		String prefix = NEW_LINE + "=========================  Mail Request  =========================" + NEW_LINE;
 		StringBuilder builder = new StringBuilder();

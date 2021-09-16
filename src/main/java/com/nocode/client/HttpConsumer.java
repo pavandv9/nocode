@@ -45,14 +45,16 @@ import com.nocode.utils.PropertyUtil;
 
 import lombok.NonNull;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Pavan.DV
- * 
- * @since 1.0.0
+ * The Class HttpConsumer.
  *
+ * @author Pavan.DV
+ * @since 1.0.0
  */
 public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 
+	/** The http request. */
 	private HttpRequest httpRequest;
 
 	static {
@@ -60,10 +62,9 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 	}
 
 	/**
-	 * Process HttpRequest
-	 * 
-	 * @param httpRequest
-	 * @return
+	 * Process HttpRequest.
+	 *
+	 * @return the http response
 	 */
 	private HttpResponse processRequest() {
 		loadConfigFileAndValidateRequest();
@@ -81,11 +82,22 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 		return httpResponse;
 	}
 
+	/**
+	 * Gets the http request.
+	 *
+	 * @return the http request
+	 */
 	@Override
 	public HttpRequest getHttpRequest() {
 		return httpRequest;
 	}
 
+	/**
+	 * Execute.
+	 *
+	 * @param httpRequest the http request
+	 * @return the http response
+	 */
 	@Override
 	public HttpResponse execute(@NonNull HttpRequest httpRequest) {
 		this.httpRequest = httpRequest;
@@ -94,8 +106,8 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 
 	/**
 	 * Get URI by building url, path parameters and query parameters.
-	 * 
-	 * @return
+	 *
+	 * @return the uri
 	 */
 	private URI uri() {
 		URI uri = null;
@@ -121,9 +133,9 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 	}
 
 	/**
-	 * Build path parameter to url
-	 * 
-	 * @return
+	 * Build path parameter to url.
+	 *
+	 * @return the string
 	 */
 	private String buildPathParams() {
 		String endPointWithPathPrams = httpRequest.getEndPoint();
@@ -158,14 +170,20 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 
 	/**
 	 * Set headers to the request.
-	 * 
-	 * @param httpUriRequest
+	 *
+	 * @param httpUriRequest the new headers
 	 */
 	private void setHeaders(HttpUriRequest httpUriRequest) {
 		for (Entry<String, Object> entry : httpRequest.getHeaders().entrySet())
 			httpUriRequest.setHeader(entry.getKey(), entry.getValue().toString());
 	}
 
+	/**
+	 * Gets the http uri request.
+	 *
+	 * @param method the method
+	 * @return the http uri request
+	 */
 	private HttpUriRequest getHttpUriRequest(HttpMethod method) {
 		HttpUriRequest httpUriRequest = null;
 		switch (method) {
@@ -220,12 +238,18 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 		return httpUriRequest;
 	}
 
+	/**
+	 * Load config.
+	 */
 	private void loadConfig() {
 		loadConfigProperties();
 		formatUrlAndEndPoint();
 		loadHeaders();
 	}
 
+	/**
+	 * Load config properties.
+	 */
 	private void loadConfigProperties() {
 		String env = "";
 		try {
@@ -265,6 +289,9 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 		}
 	}
 
+	/**
+	 * Format url and end point.
+	 */
 	private void formatUrlAndEndPoint() {
 		if (httpRequest.getEndPoint() == null || httpRequest.getEndPoint().isEmpty()) {
 			httpRequest.addBaseUrl(httpRequest.getBaseUrl());
@@ -283,6 +310,9 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 		}
 	}
 
+	/**
+	 * Load headers.
+	 */
 	private void loadHeaders() {
 		if (httpRequest.getHeaders().isEmpty()) {
 			httpRequest.addHeader(CONTENT_TYPE, APPLICATION_JSON);
@@ -294,6 +324,11 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 		}
 	}
 
+	/**
+	 * Gets the http entity body.
+	 *
+	 * @return the http entity body
+	 */
 	private HttpEntity getHttpEntityBody() {
 		HttpEntity entity = null;
 		try {
@@ -304,13 +339,19 @@ public class HttpConsumer implements HttpClient, ILogger, IHeaders {
 		return entity;
 	}
 
+	/**
+	 * Clear files.
+	 */
 	private static void clearFiles() {
 		clearTestResultFiles();
 	}
 
+	/**
+	 * Clear test result files.
+	 */
 	private static void clearTestResultFiles() {
 		try {
-			File[] files = new File("test-result").listFiles();
+			File[] files = new File("test-results").listFiles();
 			Arrays.sort(files);
 			if (files.length >= 10) {
 				Arrays.stream(new File(files[0].getAbsolutePath()).listFiles()).forEach(File::delete);

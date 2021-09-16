@@ -6,8 +6,11 @@ import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
 import com.nocode.config.ExtentReportManager;
+import com.nocode.utils.ILogger;
+import com.nocode.utils.ReportLogger;
 import com.nocode.utils.ReportUtil;
 
+// TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving report events. The class that is
  * interested in processing a report event implements this interface, and the
@@ -18,7 +21,7 @@ import com.nocode.utils.ReportUtil;
  * @author Pavan.DV
  * @since 1.0.0
  */
-public class ReportListener implements ITestListener {
+public class ReportListener implements ITestListener, ILogger {
 
 	/**
 	 * Gets the test name.
@@ -84,17 +87,32 @@ public class ReportListener implements ITestListener {
 		return result.getMethod().getDescription() != null ? result.getMethod().getDescription() : getTestName(result);
 	}
 
+	/**
+	 * On test start.
+	 *
+	 * @param result the result
+	 */
 	@Override
 	public void onTestStart(ITestResult result) {
 		ExtentReportManager.startTest(getMainTestName(result), getMainTestDescription(result), getTestName(result),
 				getTestDescription(result), getTestGroups(result));
 	}
 
+	/**
+	 * On test success.
+	 *
+	 * @param result the result
+	 */
 	@Override
 	public void onTestSuccess(ITestResult result) {
 		// will be adding in detail
 	}
 
+	/**
+	 * On test failure.
+	 *
+	 * @param result the result
+	 */
 	@Override
 	public void onTestFailure(ITestResult result) {
 		Throwable t = result.getThrowable();
@@ -105,24 +123,47 @@ public class ReportListener implements ITestListener {
 		}
 	}
 
+	/**
+	 * On test skipped.
+	 *
+	 * @param result the result
+	 */
 	@Override
 	public void onTestSkipped(ITestResult result) {
 		// will be adding in detail
 	}
 
+	/**
+	 * On test failed but within success percentage.
+	 *
+	 * @param result the result
+	 */
 	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
 		// will be adding in detail
 	}
 
+	/**
+	 * On start.
+	 *
+	 * @param context the context
+	 */
 	@Override
 	public void onStart(ITestContext context) {
 		// will be adding in detail
 	}
 
+	/**
+	 * On finish.
+	 *
+	 * @param context the context
+	 */
 	@Override
 	public void onFinish(ITestContext context) {
 		ExtentReportManager.getExtentReports().flush();
+		LOG.info(String.format(ReportLogger.NEW_LINE + "%1$-15s%2$-5s%3$-5s" + ReportLogger.NEW_LINE,
+				"Find the report here", ":",
+				ExtentReportManager.USER_DIR + "/" + ExtentReportManager.spark.getFile() + "/Index.html"));
 	}
 
 }

@@ -14,14 +14,23 @@ import com.nocode.config.EmailConfig;
 import com.nocode.constants.MailProperty;
 import com.nocode.constants.ResourceFile;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class SpringMailUtil.
+ *
  * @author Pavan.DV
  * @since 1.0.0
  */
 public class SpringMailUtil implements ILogger {
 
+	/** The properties. */
 	static Properties properties;
 
+	/**
+	 * Send mail.
+	 *
+	 * @param testcases the testcases
+	 */
 	public static void sendMail(StringBuilder testcases) {
 		createFileIfNotExist();
 		PropertyUtil.loadProperties(
@@ -40,9 +49,8 @@ public class SpringMailUtil implements ILogger {
 	/**
 	 * Create file {@link mail.properties} if doesn't exist in main/resources
 	 * folder.
-	 * 
+	 *
 	 * @return true if file created.
-	 * @throws IOException
 	 */
 	private static void createFileIfNotExist() {
 		String filePath = System.getProperty("user.dir") + "/src/main/resources/" + ResourceFile.MAIL_FILE.getValue();
@@ -60,6 +68,9 @@ public class SpringMailUtil implements ILogger {
 		}
 	}
 
+	/**
+	 * Sets the default props.
+	 */
 	private static void setDefaultProps() {
 		properties.put(MailProperty.SEND_MAIL.getValue(), "false");
 		properties.put(MailProperty.HOST.getValue(), "gmail/outlook/office365");

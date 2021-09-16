@@ -13,26 +13,40 @@ import org.json.JSONException;
 
 import com.nocode.constants.ConfigProperty;
 import com.nocode.constants.ResourceFile;
+import com.nocode.exception.HttpException;
 import com.nocode.model.ScenarioSteps;
 import com.nocode.model.Steps;
 import com.nocode.model.TestData;
 import com.nocode.model.TestDataProvider;
+import com.nocode.utils.ILogger;
 import com.nocode.utils.JavaUtil;
 import com.nocode.utils.PropertyUtil;
 
 /**
- * @author Pavan.DV
+ * The Class NoCodeClient.
  *
+ * @author Pavan.DV
  * @since 2.0.0
  */
-public class NoCodeClient {
+public class NoCodeClient implements ILogger {
 
+	/**
+	 * Gets the execution file.
+	 *
+	 * @return the execution file
+	 */
 	public ScenarioSteps[] getExecutionFile() {
 		Object executionFile = PropertyUtil.get(ConfigProperty.EXECUTION_FILE);
 		ScenarioSteps[] scenarioSteps = getStepsFromJson(executionFile.toString());
 		return null != scenarioSteps ? scenarioSteps : new ScenarioSteps[0];
 	}
 
+	/**
+	 * Gets the steps from json.
+	 *
+	 * @param jsonFile the json file
+	 * @return the steps from json
+	 */
 	private ScenarioSteps[] getStepsFromJson(String jsonFile) {
 		String filePath = TestNGRunner.class.getClassLoader().getResource(ResourceFile.TEST.getValue() + "/" + jsonFile)
 				.getPath();
@@ -43,6 +57,12 @@ public class NoCodeClient {
 		return getScenarioStepsWithTestData(scenarioStepsWithExecuteFlagY);
 	}
 
+	/**
+	 * Gets the scenario steps with test data.
+	 *
+	 * @param scenarioStepsWithExecuteFlagY the scenario steps with execute flag Y
+	 * @return the scenario steps with test data
+	 */
 	private ScenarioSteps[] getScenarioStepsWithTestData(ScenarioSteps[] scenarioStepsWithExecuteFlagY) {
 		List<ScenarioSteps> scenarioStepsWithDataProvider = new ArrayList<>();
 		for (ScenarioSteps scenario : scenarioStepsWithExecuteFlagY) {
@@ -58,9 +78,9 @@ public class NoCodeClient {
 
 	/**
 	 * Create scenario steps using steps array.
-	 * 
-	 * @param scenario
-	 * @param scenarioStepsWithDataProvider
+	 *
+	 * @param scenarioSteps the scenario steps
+	 * @param scenarioStepsWithDataProvider the scenario steps with data provider
 	 */
 	private void createScenarioStepsWithMultiSteps(ScenarioSteps scenarioSteps,
 			List<ScenarioSteps> scenarioStepsWithDataProvider) {
@@ -89,9 +109,9 @@ public class NoCodeClient {
 
 	/**
 	 * Create scenario steps.
-	 * 
-	 * @param scenario
-	 * @param scenarioStepsWithDataProvider
+	 *
+	 * @param scenario the scenario
+	 * @param scenarioStepsWithDataProvider the scenario steps with data provider
 	 */
 	private void createScenarioSteps(ScenarioSteps scenario, List<ScenarioSteps> scenarioStepsWithDataProvider) {
 		String testdata = (String) scenario.getRequest().getTestdata();
@@ -113,6 +133,14 @@ public class NoCodeClient {
 			scenarioStepsWithDataProvider.add(scenario);
 	}
 
+	/**
+	 * Creates the scenario steps with test data.
+	 *
+	 * @param scenario the scenario
+	 * @param testData the test data
+	 * @param testDataProvider the test data provider
+	 * @return the scenario steps
+	 */
 	private ScenarioSteps createScenarioStepsWithTestData(ScenarioSteps scenario, TestData testData,
 			TestDataProvider testDataProvider) {
 		ScenarioSteps copyOfScenarioSteps = scenario.copy();
@@ -135,6 +163,13 @@ public class NoCodeClient {
 		return copyOfScenarioSteps;
 	}
 
+	/**
+	 * Creates the scenario steps with test data body.
+	 *
+	 * @param scenario the scenario
+	 * @param testData the test data
+	 * @return the scenario steps
+	 */
 	private ScenarioSteps createScenarioStepsWithTestDataBody(ScenarioSteps scenario, TestData testData) {
 		ScenarioSteps copyOfScenarioSteps = scenario.copy();
 		Map<String, Object> body = JavaUtil.getMapFromObject(testData.getBody());
@@ -142,6 +177,14 @@ public class NoCodeClient {
 		return copyOfScenarioSteps;
 	}
 
+	/**
+	 * Creates the scenario steps with test data body multi steps.
+	 *
+	 * @param copyOfScenarioSteps the copy of scenario steps
+	 * @param testData the test data
+	 * @param mSteps the m steps
+	 * @return the scenario steps
+	 */
 	private ScenarioSteps createScenarioStepsWithTestDataBodyMultiSteps(ScenarioSteps copyOfScenarioSteps,
 			TestData testData, Steps mSteps) {
 		Map<String, Object> body = JavaUtil.getMapFromObject(testData.getBody());
@@ -152,6 +195,13 @@ public class NoCodeClient {
 		return copyOfScenarioSteps;
 	}
 
+	/**
+	 * Sets the request body with test data.
+	 *
+	 * @param copyOfScenarioSteps the copy of scenario steps
+	 * @param testData the test data
+	 * @param testDataProvider the test data provider
+	 */
 	private void setRequestBodyWithTestData(ScenarioSteps copyOfScenarioSteps, TestData testData,
 			TestDataProvider testDataProvider) {
 		Map<String, Object> refBody = JavaUtil.getMapFromObject(testData.getBody());
@@ -159,12 +209,25 @@ public class NoCodeClient {
 		copyOfScenarioSteps.getRequest().setTestdata(JavaUtil.getJsonFromMap(JavaUtil.deepMergeMaps(refBody, dpBody)));
 	}
 
+	/**
+	 * Gets the execution scenarios.
+	 *
+	 * @return the execution scenarios
+	 */
 	public ScenarioSteps[] getExecutionScenarios() {
-		PropertyUtil.loadProperties(ResourceFile.CONFIG_FILE);
-		Object executionFile = PropertyUtil.get(ConfigProperty.EXECUTION_FILE);
-		String filePath = TestNGRunner.class.getClassLoader()
-				.getResource(ResourceFile.TEST.getValue() + "/" + executionFile.toString()).getPath();
-		return (ScenarioSteps[]) JavaUtil.getClassFromJsonArray(filePath, ScenarioSteps[].class);
+		Object executionFile = null;
+		try {
+			PropertyUtil.loadProperties(ResourceFile.CONFIG_FILE);
+			try {
+				executionFile = PropertyUtil.get(ConfigProperty.EXECUTION_FILE);
+				String filePath = TestNGRunner.class.getClassLoader()
+						.getResource(ResourceFile.TEST.getValue() + "/" + executionFile.toString()).getPath();
+				return (ScenarioSteps[]) JavaUtil.getClassFromJsonArray(filePath, ScenarioSteps[].class);
+			} catch (NullPointerException e) {
+				throw new HttpException("execution_file not found in config.properties");
+			}
+		} catch (NullPointerException e) {
+			throw new HttpException("config.properties not found in src/main/resources");
+		}
 	}
-
 }

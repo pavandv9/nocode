@@ -13,14 +13,23 @@ import org.apache.http.util.EntityUtils;
 import com.nocode.exception.HttpException;
 import com.nocode.model.StatusLine;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class Response.
+ *
  * @author Pavan.DV
  * @since 1.0.0
  */
 public final class Response extends HttpResponse {
 
+	/** The response. */
 	CloseableHttpResponse response;
 
+	/**
+	 * Instantiates a new response.
+	 *
+	 * @param closeableHttpResponse the closeable http response
+	 */
 	public Response(CloseableHttpResponse closeableHttpResponse) {
 		super();
 		this.response = closeableHttpResponse;
@@ -30,7 +39,7 @@ public final class Response extends HttpResponse {
 	}
 
 	/**
-	 * Set status line from response
+	 * Set status line from response.
 	 */
 	@Override
 	protected void setStatusLine() {
@@ -41,7 +50,7 @@ public final class Response extends HttpResponse {
 	}
 
 	/**
-	 * Set body from response
+	 * Set body from response.
 	 */
 	@Override
 	protected void setBody() {
@@ -53,7 +62,7 @@ public final class Response extends HttpResponse {
 	}
 
 	/**
-	 * Set headers from response
+	 * Set headers from response.
 	 */
 	@Override
 	protected void setHeaders() {
