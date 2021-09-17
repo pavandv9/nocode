@@ -50,7 +50,7 @@ public class ReportListener implements ITestListener, ILogger {
 		if (test != null && !"".equalsIgnoreCase(test.testName().trim())) {
 			return test.testName().trim();
 		}
-		return result.getTestClass().getRealClass().getSimpleName();
+		return result.getTestContext().getAttribute("testClassName").toString();
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package com.nocode.config;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,26 +20,25 @@ import com.aventstack.extentreports.reporter.configuration.ViewName;
  * @since 1.0.0
  */
 public class ExtentReportManager {
-	
+
 	/** The Constant USER_DIR. */
 	public static final String USER_DIR;
-	
+
 	/** The Constant PROJECT_NAME. */
 	private static final String PROJECT_NAME;
-	
+
 	/** The Constant REPORT_NAME. */
 	public static final String REPORT_NAME;
-	
+
 	/** The spark. */
 	public static ExtentSparkReporter spark;
-	
+
 	static {
 		USER_DIR = System.getProperty("user.dir");
 		PROJECT_NAME = Paths.get(USER_DIR).getFileName().toString();
 		REPORT_NAME = String.format("%s_%s_%s", PROJECT_NAME, "report",
-				new SimpleDateFormat("dd-MM-yy_hh:mm:ss").format(new Date()));
+				new SimpleDateFormat("dd-MM-yy_hh-mm-ss").format(new Date()));
 	}
-	
 
 	/**
 	 * The extent reports.
@@ -66,7 +66,6 @@ public class ExtentReportManager {
 			spark = getSparkReporter();
 			extentReports.attachReporter(spark);
 			extentReports.setAnalysisStrategy(AnalysisStrategy.TEST);
-
 		}
 		return extentReports;
 	}
@@ -77,22 +76,23 @@ public class ExtentReportManager {
 	 * @return the spark reporter
 	 */
 	private static ExtentSparkReporter getSparkReporter() {
-		spark = new ExtentSparkReporter("test-results");
+		spark = new ExtentSparkReporter("test-results" + File.separator + REPORT_NAME);
 		spark.viewConfigurer().viewOrder().as(new ViewName[] { ViewName.TEST, ViewName.DASHBOARD, ViewName.CATEGORY,
 				ViewName.AUTHOR, ViewName.DEVICE, ViewName.EXCEPTION, ViewName.LOG }).apply();
 		spark.config().thumbnailForBase64(true);
 		spark.config().setReportName(PROJECT_NAME);
+		spark.config().setDocumentTitle(PROJECT_NAME.toLowerCase()+" report");
 		return spark;
 	}
 
 	/**
 	 * Start test.
 	 *
-	 * @param testClassName the test class name
+	 * @param testClassName        the test class name
 	 * @param testClassDescription the test class description
-	 * @param testName the test name
-	 * @param desc     the desc
-	 * @param testGroups the test groups
+	 * @param testName             the test name
+	 * @param desc                 the desc
+	 * @param testGroups           the test groups
 	 */
 	public synchronized static void startTest(String testClassName, String testClassDescription, String testName,
 			String desc, String[] testGroups) {

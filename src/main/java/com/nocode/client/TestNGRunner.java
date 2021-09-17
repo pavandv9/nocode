@@ -36,6 +36,8 @@ public class TestNGRunner implements ITest {
 	
 	/** The m step client. */
 	private MultiStepClient mStepClient = new MultiStepClient();
+	
+	private static String testClassName;
 
 	/**
 	 * Gets the single instance of TestNGRunner.
@@ -50,11 +52,13 @@ public class TestNGRunner implements ITest {
 	 * Run test class.
 	 */
 	public void runTestClass() {
+		testClassName = Thread.currentThread().getStackTrace()[3].getFileName().split("[.]")[0];
 		TestNG suite = new TestNG();
 		suite.addListener(new NoCodeListener());
 		suite.setVerbose(2);
 		suite.setOutputDirectory("test-output");
 		suite.setTestClasses(new Class[] { TestNGRunner.class });
+		suite.setDefaultSuiteName("Test summary suite");
 		suite.run();
 	}
 
@@ -111,6 +115,7 @@ public class TestNGRunner implements ITest {
 	public void beforeMethod(Object[] testData, ITestContext ctx) {
 		testName.set(testData[0].toString());
 		ctx.setAttribute("testName", testName.get());
+		ctx.setAttribute("testClassName", testClassName);
 	}
 
 	/**
